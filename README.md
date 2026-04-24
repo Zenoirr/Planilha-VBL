@@ -2,7 +2,7 @@
 
 Sistema de análise de desempenho para jogadores de vôlei, focado em **scout simples, rápido e justo**.
 
-🔗 Acesse: https://zenoir.github.io/planilhavbl/
+🔗 Acesse: [Aqui](https://zenoirr.github.io/Planilha-VBL/)
 
 ---
 
