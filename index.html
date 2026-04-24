@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zenoir Stats</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#06070a;--line:#405682;--text:#eef3ff;--muted:#9aa6bb;
+  --blue:#5b8cff;--good:#31d07c;--bad:#ff5570;--mid:#ffcc66;
+  --ponteiro:#5b8cff;--oposto:#ff8a4c;--libero:#31d07c;--dsspiker:#a97cff;--dstsk:#ffcc66;--setter:#ff6edb;
+}
+html,body{
+  margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--text);
+  background:radial-gradient(circle at top left,rgba(91,140,255,.22),transparent 38%),
+             radial-gradient(circle at bottom right,rgba(255,85,112,.12),transparent 35%),var(--bg);
+}
+body{padding:8px}
+.app{display:grid;gap:10px;max-width:1280px;margin:auto}
+.hidden{display:none!important}
+
+.top{display:grid;grid-template-columns:1fr;gap:10px}
+.title-input{display:none;width:100%;border:2px solid var(--line);border-radius:7px;background:#070b12;color:var(--text);font-weight:900;text-align:center;box-shadow:0 0 18px rgba(91,140,255,.22)}
+.reset{height:54px;border:2px solid #6a3142;border-radius:7px;background:#211019;color:#ffdbe1;font-size:20px;font-weight:900;cursor:pointer}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.tab{height:58px;border:2px solid var(--line);border-radius:7px;background:#101827;color:var(--muted);font-weight:900;font-size:19px;cursor:pointer}
+.tab.active{background:#1a2a4a;color:white;border-color:var(--blue);box-shadow:0 0 16px rgba(91,140,255,.25)}
+.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.summary-card{border:2px solid var(--line);border-radius:7px;background:linear-gradient(180deg,#111827,#080b12);padding:14px 16px}
+.summary-card span{display:block;font-size:16px;color:var(--muted);text-transform:uppercase}.summary-card b{font-size:36px}
+.main{min-height:0}
+.cards{display:grid;grid-template-columns:1fr;gap:10px}
+.player-card{--role-color:var(--blue);border:2px solid var(--line);border-left:6px solid var(--role-color);border-radius:7px;background:linear-gradient(180deg,#111827,#090c14);padding:9px;display:grid;gap:8px;box-shadow:0 0 14px rgba(91,140,255,.11);overflow:hidden}
+.player-card.good{border-color:rgba(49,208,124,.8);border-left-color:var(--role-color)}
+.player-card.bad{border-color:rgba(255,85,112,.8);border-left-color:var(--role-color)}
+.role-ponteiro{--role-color:var(--ponteiro)}.role-oposto{--role-color:var(--oposto)}.role-libero{--role-color:var(--libero)}.role-dsspiker{--role-color:var(--dsspiker)}.role-dstsk{--role-color:var(--dstsk)}.role-setter{--role-color:var(--setter)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.field label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:3px;letter-spacing:.4px}
+.role-box,input{width:100%;height:32px;border:2px solid var(--line);border-radius:5px;background:#05070c;color:var(--text);padding:6px 8px;font-size:13px}
+.role-box{font-weight:900;border-left:5px solid var(--role-color);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 10px rgba(91,140,255,.25)}
+.counter{display:grid;grid-template-columns:34px 1fr 34px}
+button{border:2px solid var(--line);background:#1a2a4a;color:white;font-weight:900;cursor:pointer}
+.score-box{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;border-top:2px solid var(--line);padding-top:7px;margin-top:auto}
+.metric{font-size:11px;color:var(--muted)}.metric b{display:block;font-size:16px;color:var(--text)}.rating.good{color:var(--good)}.rating.bad{color:var(--bad)}.rating.mid{color:var(--mid)}
+.final-view{border:2px solid var(--line);border-radius:7px;background:linear-gradient(180deg,#111827,#080b12);padding:14px;overflow:auto;width:100%}
+.final-grid{display:grid;align-content:start;gap:8px}
+.final-row{display:grid;grid-template-columns:1.35fr repeat(5,.75fr);gap:8px;align-items:center;border-bottom:2px solid rgba(64,86,130,.75);padding:10px 0;font-size:13px}
+.final-row.header{color:var(--blue);font-weight:900;text-transform:uppercase;font-size:11px}.final-row b{font-size:15px}.final-row.mvp b{color:var(--good)}.final-row.worst b{color:var(--bad)}.final-good{color:var(--good)}.final-bad{color:var(--bad)}
+.info{display:grid;gap:8px;border-top:2px solid var(--line);padding-top:8px;color:var(--muted);font-size:10px;line-height:1.35}
+.info div{border-left:4px solid var(--blue);padding-left:8px}.info b{display:block;color:var(--text)}
+.footer{text-align:center;font-size:11px;color:var(--muted)}.footer span{color:#a9c2ff}
+
+@media(min-width:900px){
+  html,body{height:100%;overflow:hidden}
+  body{padding:12px 20px}
+  .app{
+    width:min(98vw,1720px);height:calc(100vh - 24px);max-width:none;
+    display:grid;grid-template-rows:40px 40px 58px minmax(0,1fr) 58px 18px;gap:8px;margin:0 auto;
+  }
+  .top{width:min(1040px,100%);margin:0 auto;grid-template-columns:minmax(0,1fr) 96px;gap:12px}
+  .title-input{display:block;height:40px;padding:4px 14px;font-size:32px;line-height:1}
+  .reset{height:40px;font-size:13px;padding:0 10px}
+  .tabs{width:min(860px,100%);margin:0 auto;grid-template-columns:repeat(4,1fr);gap:10px}
+  .tab{height:40px;font-size:15px}
+  .summary{width:min(860px,100%);margin:0 auto;grid-template-columns:repeat(2,1fr);gap:10px}
+  .summary-card{height:58px;padding:9px 14px}.summary-card span{font-size:11px}.summary-card b{font-size:23px}
+  .main{min-height:0;height:100%;overflow:hidden}
+  .cards{height:100%;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;overflow:hidden}
+  .player-card{height:100%;min-height:0;padding:8px;gap:5px;border-radius:8px;overflow:hidden}
+  .row{gap:10px}.field label{font-size:9px;margin-bottom:2px}.role-box,input{height:27px;padding:4px 8px;font-size:13px}.counter{grid-template-columns:30px 1fr 30px}button{height:27px;min-height:27px;font-size:13px}
+  .score-box{padding-top:5px;gap:5px}.metric{font-size:10px}.metric b{font-size:14px}
+  .info{height:58px;grid-template-columns:repeat(3,1fr);gap:12px;font-size:10px;line-height:1.18;padding-top:7px;overflow:hidden}
+  .footer{height:18px;font-size:11px;line-height:18px}
+  .final-view{width:min(1280px,100%);height:100%;max-height:100%;margin:0 auto;overflow:auto}
+  .final-row{grid-template-columns:1.5fr repeat(5,.75fr);padding:10px 0;font-size:15px}.final-row.header{font-size:12px}.final-row b{font-size:16px}
+}
+@media(max-width:520px){.final-row span:nth-child(6){display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <input id="gameTitle" class="title-input" value="TIME1 x TIME2">
+    <button class="reset" onclick="resetCurrentSet()">RESET SET</button>
+  </div>
+
+  <section class="tabs">
+    <button class="tab active" onclick="switchView('set1')">SET 1</button>
+    <button class="tab" onclick="switchView('set2')">SET 2</button>
+    <button class="tab" onclick="switchView('set3')">SET 3</button>
+    <button class="tab" onclick="switchView('final')">FINAL</button>
+  </section>
+
+  <section class="summary">
+    <div class="summary-card"><span>Total Erros</span><b id="sumMistakes">0</b></div>
+    <div class="summary-card"><span>Rating Médio</span><b id="avgRating">0.0</b></div>
+  </section>
+
+  <main class="main">
+    <section class="cards" id="cards"></section>
+    <section class="final-view hidden" id="finalView"><div class="final-grid" id="finalGrid"></div></section>
+  </main>
+
+  <section class="info">
+    <div><b>Mistake DEF (geral)</b>Pontos sofridos por erro direto: mau posicionamento, falta de reação, out spot ou punish recebido. Para setter: blocks que geram ponto (ghost ou mau posicionamento).</div>
+    <div><b>Mistake OF (spikers)</b>Spike no block sem necessidade, spike out ou jogada que resulta em punish/ponto por erro claro do jogador.</div>
+    <div><b>Mistake OF (DS/Setter)</b>Set ou jump set errado que prejudica a jogada. Se o erro não impactar o jogo, não conta.</div>
+  </section>
+
+  <div class="footer">Made By <span>Zenoir</span> © 2026</div>
+</div>
+
+<script>
+const STORAGE_KEY='zenoir_stats_consistency_fix_v1';
+
+const emptyRows=[
+  ['Ponteiro','Player1',0,0,0,0],
+  ['Oposto','Player2',0,0,0,0],
+  ['Líbero','Player3',0,0,0,0],
+  ['Ds Spiker','Player4',0,0,0,0],
+  ['Ds Tsk','Player5',0,0,0,0],
+  ['Setter','Player6',0,0,0,0]
+];
+
+function cloneRows(){return JSON.parse(JSON.stringify(emptyRows));}
+
+let data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')||{
+  title:'TIME1 x TIME2',
+  sets:[cloneRows(),cloneRows(),cloneRows()]
+};
+
+let currentSet=0;
+let currentView='set1';
+
+const root=document.getElementById('cards');
+const finalView=document.getElementById('finalView');
+const finalGrid=document.getElementById('finalGrid');
+const title=document.getElementById('gameTitle');
+title.value=data.title;
+
+function roleKey(role){return role.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,'');}
+function clampRating(value){return Number(Math.max(0,Math.min(10,value)).toFixed(1));}
+function isSetter(role){return role==='Setter';}
+function isDsTsk(role){return role==='Ds Tsk';}
+function hasActivity(r){return !!(+r[2] || +r[3] || +r[4] || +r[5]);}
+
+/*
+Rating motivacional:
+- 0 a 10.
+- Player neutro (mesmo tanto de scored e scored on) fica perto de 6.5.
+- Scored pesa mais que erros.
+- Erros reduzem, mas não destroem o rating.
+*/
+function rating(r){
+  const role=r[0], scored=+r[2], on=+r[3], of=+r[4], df=+r[5];
+
+  if(!hasActivity(r)) return 0;
+
+  if(isSetter(role)){
+    let base=9.2-(of*0.28)-(df*0.22);
+    base+=scored*0.35; // bonus for rare scoring
+    return clampRating(base);
+  }
+
+  if(isDsTsk(role)){
+    let base=9.0-(on*0.18)-(of*0.28)-(df*0.20);
+    base+=scored*0.35; // bonus for scoring
+    return clampRating(base);
+  }
+
+  const net=scored-on;
+  const positive=Math.max(0,net);
+  const negative=Math.max(0,-net);
+
+  let base=6.5+(positive*0.42)-(negative*0.32);
+
+  // Scoring volume bonus: rewards active/high-impact players without overbuffing.
+  base+=Math.min(1.2,scored*0.08);
+
+  // Mistakes are a light penalty; they should not destroy the rating by themselves.
+  base-=(of*0.18)+(df*0.22);
+
+  return clampRating(base);
+}
+
+function mvpScore(r){
+  const role=r[0], scored=+r[2], on=+r[3], of=+r[4], df=+r[5], rt=rating(r);
+
+  if(!hasActivity(r)) return -999;
+
+  if(isSetter(role)) return rt-(of+df)*0.2;
+  if(isDsTsk(role)) return rt-(on*0.08)-(of+df)*0.12;
+
+  return rt+((scored-on)*0.25)+(scored*0.05)-(of*0.08)-(df*0.1);
+}
+
+function efficiency(r){return hasActivity(r) ? Math.round(rating(r)*10) : 0;}
+
+function consistency(r){
+  if(!hasActivity(r)) return '-';
+
+  const rt=rating(r);
+  const role=r[0], on=+r[3], of=+r[4], df=+r[5];
+  const bad=isSetter(role) ? of+df : on+of+df;
+
+  // Consistência agora acompanha o rating.
+  // Isso evita casos tipo rating 10 e consistência baixa.
+  if(rt>=8) return 'Alta';
+  if(rt>=5.5) return 'Média';
+
+  // Só marca baixa quando o rating realmente caiu.
+  return 'Baixa';
+}
+
+function ratingEmoji(rt,r){
+  if(!hasActivity(r)) return '';
+  if(rt>=8.5)return '🔥';
+  if(rt>=7)return '✅';
+  if(rt>=5.5)return '⚖️';
+  if(rt>=4)return '❄️';
+  return '💀';
+}
+
+function ratingClass(rt,r){
+  if(!hasActivity(r)) return 'mid';
+  if(rt>=8)return 'good';
+  if(rt<4)return 'bad';
+  return 'mid';
+}
+
+function save(){
+  data.title=title.value;
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+}
+
+function activeRows(){return data.sets[currentSet];}
+
+function switchView(view){
+  currentView=view;
+  document.querySelectorAll('.tab').forEach((b,i)=>
+    b.classList.toggle('active',view==='final'?i===3:i===Number(view.replace('set',''))-1)
+  );
+
+  if(view==='final'){
+    root.classList.add('hidden');
+    finalView.classList.remove('hidden');
+    renderFinal();
+  }else{
+    currentSet=Number(view.replace('set',''))-1;
+    root.classList.remove('hidden');
+    finalView.classList.add('hidden');
+    render();
+  }
+}
+
+function change(input,rowIndex,colIndex,v){
+  const rows=activeRows();
+  rows[rowIndex][colIndex]=Math.max(0,(+input.value||0)+v);
+  input.value=rows[rowIndex][colIndex];
+  save();
+  updateAll();
+}
+
+function setVal(input,rowIndex,colIndex){
+  const rows=activeRows();
+  rows[rowIndex][colIndex]=input.type==='number'?Number(input.value||0):input.value;
+  save();
+  updateAll();
+}
+
+function makeInput(value,rowIndex,colIndex,type='text'){
+  const i=document.createElement('input');
+  i.type=type;
+  i.value=value;
+  i.oninput=()=>setVal(i,rowIndex,colIndex);
+  return i;
+}
+
+function roleField(value){
+  const d=document.createElement('div');
+  d.className='field';
+  d.innerHTML='<label>Role</label>';
+  const box=document.createElement('div');
+  box.className='role-box';
+  box.textContent=value;
+  d.appendChild(box);
+  return d;
+}
+
+function field(label,value,rowIndex,colIndex){
+  const d=document.createElement('div');
+  d.className='field';
+  d.innerHTML=`<label>${label}</label>`;
+  d.appendChild(makeInput(value,rowIndex,colIndex));
+  return d;
+}
+
+function counter(label,value,rowIndex,colIndex){
+  const d=document.createElement('div');
+  d.className='field';
+  d.innerHTML=`<label>${label}</label>`;
+  const c=document.createElement('div');
+  c.className='counter';
+  const m=document.createElement('button');
+  m.textContent='-';
+  m.type='button';
+  const i=makeInput(value,rowIndex,colIndex,'number');
+  i.step='0.5';
+  i.min='0';
+  const p=document.createElement('button');
+  p.textContent='+';
+  p.type='button';
+  m.onclick=()=>change(i,rowIndex,colIndex,-1);
+  p.onclick=()=>change(i,rowIndex,colIndex,1);
+  c.append(m,i,p);
+  d.appendChild(c);
+  return d;
+}
+
+function visibleLabelsForRole(role){
+  if(role==='Setter')return [
+    ['Scored',2],
+    ['Mistake OF',4],
+    ['Mistake DEF',5]
+  ];
+
+  if(role==='Ds Tsk')return [
+    ['Scored',2],
+    ['Scored On',3],
+    ['Mistake OF',4],
+    ['Mistake DEF',5]
+  ];
+
+  return [
+    ['Scored',2],
+    ['Scored On',3],
+    ['Mistake OF',4],
+    ['Mistake DEF',5]
+  ];
+}
+
+function render(){
+  root.innerHTML='';
+  activeRows().forEach((r,ri)=>{
+    const card=document.createElement('div');
+    card.className=`player-card role-${roleKey(r[0])}`;
+    card.dataset.index=ri;
+
+    const top=document.createElement('div');
+    top.className='row';
+    top.append(roleField(r[0]),field('Player',r[1],ri,1));
+    card.appendChild(top);
+
+    visibleLabelsForRole(r[0]).forEach(([label,col])=>{
+      card.appendChild(counter(label,r[col],ri,col));
+    });
+
+    const box=document.createElement('div');
+    box.className='score-box';
+    box.innerHTML=`
+      <div class="metric">Rating<b class="rating" data-rating></b></div>
+      <div class="metric">Eficiência<b data-eff></b></div>
+      <div class="metric">Consistência<b data-consistency></b></div>
+    `;
+    card.appendChild(box);
+    root.appendChild(card);
+  });
+  updateAll();
+}
+
+function updateSummary(rows){
+  let mistakes=0,totalRating=0,activeCount=0;
+  rows.forEach((r,i)=>{
+    mistakes+=+r[4]+ +r[5];
+    const rt=rating(r);
+    if(hasActivity(r)){totalRating+=rt;activeCount++;}
+
+    const card=document.querySelector(`[data-index="${i}"]`);
+    if(card){
+      const cls=ratingClass(rt,r);
+      card.classList.toggle('good',hasActivity(r) && rt>=8);
+      card.classList.toggle('bad',hasActivity(r) && rt<4);
+      card.querySelector('[data-rating]').textContent=`${ratingEmoji(rt,r)} ${rt}`;
+      card.querySelector('[data-rating]').className='rating '+cls;
+      card.querySelector('[data-eff]').textContent=efficiency(r)+'%';
+      card.querySelector('[data-consistency]').textContent=consistency(r);
+    }
+  });
+  document.getElementById('sumMistakes').textContent=mistakes;
+  document.getElementById('avgRating').textContent=activeCount ? (totalRating/activeCount).toFixed(1) : '0.0';
+}
+
+function updateAll(){
+  if(currentView==='final')renderFinal();
+  else updateSummary(activeRows());
+}
+
+function combinedRows(){
+  return emptyRows.map((baseRow,idx)=>{
+    const role=baseRow[0];
+    const player=data.sets[0][idx][1]||baseRow[1];
+    const sums=[0,0,0,0];
+    data.sets.forEach(set=>{
+      for(let c=2;c<=5;c++)sums[c-2]+=Number(set[idx][c]||0);
+    });
+    return [role,player,...sums];
+  });
+}
+
+function renderFinal(){
+  const rows=combinedRows().sort((a,b)=>(hasActivity(b)-hasActivity(a)) || (mvpScore(b)-mvpScore(a)));
+  updateSummary(rows);
+
+  let best=null,worst=null;
+  rows.forEach(r=>{
+    if(!hasActivity(r)) return;
+    const rt=rating(r), mvp=mvpScore(r);
+    if(!best||mvp>best.mvp)best={name:r[1],rt,mvp};
+    if(!worst||rt<worst.rt)worst={name:r[1],rt};
+  });
+
+  finalGrid.innerHTML='<div class="final-row header"><span>Player</span><span>Scored</span><span>On</span><span>OF</span><span>DEF</span><span>Rating</span></div>';
+
+  rows.forEach(r=>{
+    const rt=rating(r);
+    const div=document.createElement('div');
+    div.className='final-row';
+    if(best && hasActivity(r) && r[1]===best.name)div.classList.add('mvp');
+    if(worst && hasActivity(r) && r[1]===worst.name)div.classList.add('worst');
+
+    const name = best && hasActivity(r) && r[1]===best.name ? `${r[1]} (MVP)` :
+                 worst && hasActivity(r) && r[1]===worst.name ? `${r[1]} (Worst)` : r[1];
+
+    div.innerHTML=`
+      <b>${name}</b>
+      <span>${r[2]}</span>
+      <span>${r[3]}</span>
+      <span>${r[4]}</span>
+      <span>${r[5]}</span>
+      <span class="${hasActivity(r) && rt>=8?'final-good':hasActivity(r) && rt<4?'final-bad':''}">${ratingEmoji(rt,r)} ${rt}</span>
+    `;
+    finalGrid.appendChild(div);
+  });
+}
+
+function resetCurrentSet(){
+  const msg=currentView==='final'?'Resetar todos os 3 sets?':'Resetar este set para 0?';
+  if(confirm(msg)){
+    if(currentView==='final')data.sets=[cloneRows(),cloneRows(),cloneRows()];
+    else data.sets[currentSet]=cloneRows();
+    save();
+    currentView==='final'?renderFinal():render();
+  }
+}
+
+title.oninput=save;
+render();
+</script>
+</body>
+</html>
