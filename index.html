@@ -1,121 +1,364 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Zenoir Stats</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box}
-:root{
-  --bg:#06070a;--line:#405682;--text:#eef3ff;--muted:#9aa6bb;
-  --blue:#5b8cff;--good:#31d07c;--bad:#ff5570;--mid:#ffcc66;
-  --ponteiro:#5b8cff;--oposto:#ff8a4c;--libero:#31d07c;--dsspiker:#a97cff;--dstsk:#ffcc66;--setter:#ff6edb;
-}
-html,body{
-  margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--text);
-  background:radial-gradient(circle at top left,rgba(91,140,255,.22),transparent 38%),
-             radial-gradient(circle at bottom right,rgba(255,85,112,.12),transparent 35%),var(--bg);
-}
-body{padding:8px}
-.app{display:grid;gap:10px;max-width:1280px;margin:auto}
-.hidden{display:none!important}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-.top{display:grid;grid-template-columns:1fr;gap:10px}
-.title-input{display:none;width:100%;border:2px solid var(--line);border-radius:7px;background:#070b12;color:var(--text);font-weight:900;text-align:center;box-shadow:0 0 18px rgba(91,140,255,.22)}
-.reset{height:54px;border:2px solid #6a3142;border-radius:7px;background:#211019;color:#ffdbe1;font-size:20px;font-weight:900;cursor:pointer}
-.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.tab{height:58px;border:2px solid var(--line);border-radius:7px;background:#101827;color:var(--muted);font-weight:900;font-size:19px;cursor:pointer}
-.tab.active{background:#1a2a4a;color:white;border-color:var(--blue);box-shadow:0 0 16px rgba(91,140,255,.25)}
-.summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.summary-card{border:2px solid var(--line);border-radius:7px;background:linear-gradient(180deg,#111827,#080b12);padding:14px 16px}
-.summary-card span{display:block;font-size:16px;color:var(--muted);text-transform:uppercase}.summary-card b{font-size:36px}
-.main{min-height:0}
-.cards{display:grid;grid-template-columns:1fr;gap:10px}
-.player-card{--role-color:var(--blue);border:2px solid var(--line);border-left:6px solid var(--role-color);border-radius:7px;background:linear-gradient(180deg,#111827,#090c14);padding:9px;display:grid;gap:8px;box-shadow:0 0 14px rgba(91,140,255,.11);overflow:hidden}
-.player-card.good{border-color:rgba(49,208,124,.8);border-left-color:var(--role-color)}
-.player-card.bad{border-color:rgba(255,85,112,.8);border-left-color:var(--role-color)}
-.role-ponteiro{--role-color:var(--ponteiro)}.role-oposto{--role-color:var(--oposto)}.role-libero{--role-color:var(--libero)}.role-dsspiker{--role-color:var(--dsspiker)}.role-dstsk{--role-color:var(--dstsk)}.role-setter{--role-color:var(--setter)}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.field label{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:3px;letter-spacing:.4px}
-.role-box,input{width:100%;height:32px;border:2px solid var(--line);border-radius:5px;background:#05070c;color:var(--text);padding:6px 8px;font-size:13px}
-.role-box{font-weight:900;border-left:5px solid var(--role-color);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 10px rgba(91,140,255,.25)}
-.counter{display:grid;grid-template-columns:34px 1fr 34px}
-button{border:2px solid var(--line);background:#1a2a4a;color:white;font-weight:900;cursor:pointer}
-.score-box{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;border-top:2px solid var(--line);padding-top:7px;margin-top:auto}
-.metric{font-size:11px;color:var(--muted)}.metric b{display:block;font-size:16px;color:var(--text)}.rating.good{color:var(--good)}.rating.bad{color:var(--bad)}.rating.mid{color:var(--mid)}
-.final-view{border:2px solid var(--line);border-radius:7px;background:linear-gradient(180deg,#111827,#080b12);padding:14px;overflow:auto;width:100%}
-.final-grid{display:grid;align-content:start;gap:8px}
-.final-row{display:grid;grid-template-columns:1.35fr repeat(5,.75fr);gap:8px;align-items:center;border-bottom:2px solid rgba(64,86,130,.75);padding:10px 0;font-size:13px}
-.final-row.header{color:var(--blue);font-weight:900;text-transform:uppercase;font-size:11px}.final-row b{font-size:15px}.final-row.mvp b{color:var(--good)}.final-row.worst b{color:var(--bad)}.final-good{color:var(--good)}.final-bad{color:var(--bad)}
-.info{display:grid;gap:8px;border-top:2px solid var(--line);padding-top:8px;color:var(--muted);font-size:12px;line-height:1.35}
-.info div{border-left:4px solid var(--blue);padding:6px 10px;display:flex;flex-direction:column;justify-content:center}.info b{display:block;color:var(--text);font-size:13px;margin-bottom:3px}
-.footer{text-align:center;font-size:11px;color:var(--muted)}.footer span{color:#a9c2ff}
+:root{
+--bg:#060810;
+--bg1:#090c14;
+--bg2:#0c1020;
+--surf:#0f1424;
+--surf2:#121930;
+--raised:#172038;
+--border:rgba(80,110,200,.35);
+--border2:rgba(80,110,200,.18);
+--border3:rgba(80,110,200,.08);
+--text:#e4eeff;
+--muted:#6a82b0;
+--muted2:#3d5280;
+--blue:#5584ff;
+--blue-dim:rgba(85,132,255,.14);
+--blue-glow:rgba(85,132,255,.22);
+--green:#28d478;
+--green-dim:rgba(40,212,120,.12);
+--red:#ff3d5c;
+--red-dim:rgba(255,61,92,.12);
+--amber:#ffba30;
+--amber-dim:rgba(255,186,48,.1);
+--col-ponteiro:#5584ff;
+--col-oposto:#ff7033;
+--col-libero:#28d478;
+--col-dsspiker:#a166ff;
+--col-dstsk:#ffba30;
+--col-setter:#ff4db8;
+--r:5px;
+--r2:9px;
+--r3:12px;
+--ease:cubic-bezier(.25,.46,.45,.94);
+--spring:cubic-bezier(.34,1.56,.64,1);
+--snap:cubic-bezier(.16,1,.3,1);
+}
+
+html,body{height:100%;font-family:'Outfit',sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+body{
+padding:10px;
+background-image:
+radial-gradient(ellipse 80% 60% at 15% -5%,rgba(85,132,255,.09),transparent 55%),
+radial-gradient(ellipse 60% 50% at 85% 105%,rgba(255,61,92,.06),transparent 55%);
+overflow-x:hidden;
+}
+
+button{
+font-family:'Outfit',sans-serif;border:1px solid var(--border);background:var(--raised);
+color:var(--text);font-weight:600;cursor:pointer;display:inline-flex;align-items:center;
+justify-content:center;line-height:1;letter-spacing:.3px;
+transition:border-color .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease),transform .16s var(--spring),color .2s var(--ease)}
+button:hover{transform:translateY(-1px)}
+button:active{transform:scale(.9) translateY(0);transition-duration:.07s}
+button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+input{
+font-family:'Outfit',sans-serif;width:100%;height:32px;border:1px solid var(--border2);
+border-radius:var(--r);background:rgba(4,6,14,.65);color:var(--text);
+padding:0 10px;font-size:13px;font-weight:500;line-height:1;display:flex;align-items:center;
+transition:border-color .2s var(--ease),box-shadow .25s var(--ease),background .2s var(--ease)}
+input:hover{background:rgba(8,12,26,.75);border-color:rgba(85,132,255,.3)}
+input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(85,132,255,.12);background:rgba(5,8,20,.85)}
+input[type="number"]{-moz-appearance:textfield;text-align:center}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none}
+
+.z-hidden{display:none!important}
+
+.z-app{display:grid;gap:9px;max-width:1360px;margin:0 auto}
+
+.z-top{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:stretch}
+
+.z-title{
+display:none;width:100%;height:50px;border:1px solid var(--border2);border-radius:var(--r2);
+background:rgba(4,6,14,.8);color:var(--text);font-weight:700;font-size:20px;
+text-align:center;letter-spacing:1.5px;font-family:'Bebas Neue',sans-serif;font-size:28px;
+transition:border-color .2s var(--ease),box-shadow .25s var(--ease)}
+.z-title:hover{border-color:rgba(85,132,255,.3)}
+.z-title:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(85,132,255,.12)}
+
+.z-reset{
+height:50px;min-width:114px;border:1px solid rgba(80,25,40,.8);border-radius:var(--r2);
+background:rgba(18,6,10,.9);color:#ffbbc6;font-size:11px;letter-spacing:.8px;font-weight:700;
+transition:all .2s var(--ease),transform .16s var(--spring)}
+.z-reset:hover{background:rgba(35,10,18,.95);border-color:rgba(180,40,65,.6);box-shadow:0 4px 18px rgba(255,61,92,.15);transform:translateY(-1px)}
+.z-reset:active{transform:scale(.92);transition-duration:.07s}
+
+.z-tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+
+.z-tab{
+height:50px;border:1px solid var(--border2);border-radius:var(--r2);
+background:var(--surf);color:var(--muted);font-weight:700;font-size:16px;letter-spacing:.6px;
+position:relative;overflow:hidden;
+transition:background .25s var(--ease),border-color .25s var(--ease),color .25s var(--ease),box-shadow .25s var(--ease),transform .16s var(--spring)}
+.z-tab::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:center;transition:transform .3s var(--snap),opacity .3s var(--ease);opacity:0}
+.z-tab:hover{background:rgba(15,22,48,.9);border-color:rgba(85,132,255,.25);color:var(--text);transform:translateY(-1px)}
+.z-tab:hover::before{transform:scaleX(.4);opacity:.6}
+.z-tab.active{background:linear-gradient(150deg,rgba(23,32,56,1),rgba(85,132,255,.06));color:#fff;border-color:rgba(85,132,255,.5);box-shadow:0 2px 18px rgba(85,132,255,.12)}
+.z-tab.active::before{transform:scaleX(.55);opacity:1}
+
+.z-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+
+.z-card-sum{
+border:1px solid var(--border2);border-radius:var(--r2);
+background:linear-gradient(160deg,var(--surf),var(--bg1));
+padding:14px 18px;display:flex;flex-direction:column;justify-content:center;gap:2px;
+transition:border-color .25s var(--ease),transform .2s var(--spring)}
+.z-card-sum:hover{border-color:rgba(85,132,255,.25);transform:translateY(-1px)}
+.z-card-sum span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.9px;font-weight:600;line-height:1}
+.z-card-sum b{font-size:28px;font-weight:800;letter-spacing:.5px;line-height:1;font-family:'Bebas Neue',sans-serif;font-size:36px;transition:color .25s var(--ease)}
+.z-card-sum b.z-hi{color:var(--green);animation:z-num-pop .38s var(--spring)}
+.z-card-sum b.z-lo{color:var(--red);animation:z-num-shake .32s var(--ease)}
+
+.z-main{min-height:0;position:relative}
+
+.z-view{width:100%;height:100%;transition:opacity .28s var(--ease),transform .28s var(--snap)}
+.z-view.z-out{opacity:0;transform:translateY(8px) scale(.99);pointer-events:none}
+.z-view.z-active{opacity:1;transform:translateY(0) scale(1)}
+
+.z-grid{display:grid;grid-template-columns:1fr;gap:9px}
+
+.z-pcard{
+--col:var(--blue);
+position:relative;border:1px solid var(--border2);border-radius:var(--r3);
+background:linear-gradient(170deg,var(--surf),var(--bg1));
+display:grid;gap:0;overflow:hidden;
+transition:border-color .28s var(--ease),box-shadow .28s var(--ease),transform .22s var(--spring),background .28s var(--ease)}
+.z-pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--col),transparent);opacity:.7;transition:opacity .25s var(--ease),height .22s var(--spring)}
+.z-pcard:hover{transform:translateY(-2px);border-color:rgba(85,132,255,.22);box-shadow:0 6px 24px rgba(0,0,0,.35)}
+.z-pcard:hover::before{height:3px;opacity:1}
+.z-pcard:active{transform:translateY(-1px) scale(.999);transition-duration:.09s}
+
+.zr-ponteiro{--col:var(--col-ponteiro)}
+.zr-oposto{--col:var(--col-oposto)}
+.zr-libero{--col:var(--col-libero)}
+.zr-dsspiker{--col:var(--col-dsspiker)}
+.zr-dstsk{--col:var(--col-dstsk)}
+.zr-setter{--col:var(--col-setter)}
+
+.z-inner{padding:12px 10px 8px;display:grid;gap:7px}
+.z-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+
+.z-field label{display:flex;align-items:center;height:14px;font-size:9px;color:var(--muted2);text-transform:uppercase;margin-bottom:3px;letter-spacing:.9px;font-weight:700;line-height:1;transition:color .18s var(--ease)}
+.z-field:hover label{color:var(--muted)}
+
+.z-rolebox{
+width:100%;height:32px;border:1px solid var(--border3);border-radius:var(--r);
+background:rgba(4,6,14,.45);color:var(--col);padding:0 10px;font-size:12px;font-weight:700;
+overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display:flex;align-items:center;letter-spacing:.5px;
+font-family:'DM Mono',monospace;transition:background .18s var(--ease)}
+.z-pcard:hover .z-rolebox{background:rgba(8,12,26,.6)}
+
+.z-counter{display:grid;grid-template-columns:32px 1fr 32px;gap:5px;align-items:center}
+.z-counter button{
+height:32px;border-radius:var(--r);font-size:18px;display:flex;
+align-items:center;justify-content:center;padding:0;line-height:1;
+border-color:var(--border3);background:rgba(18,32,60,.35);
+transition:background .16s var(--ease),border-color .16s var(--ease),box-shadow .16s var(--ease),transform .14s var(--spring),color .16s var(--ease)}
+.z-counter button:hover{background:rgba(26,44,82,.65);border-color:var(--blue);box-shadow:0 0 12px rgba(85,132,255,.2);transform:translateY(-1px) scale(1.05)}
+.z-counter button:active{transform:scale(.85);box-shadow:none;transition-duration:.06s}
+.z-counter button.z-dec{color:var(--red)}
+.z-counter button.z-dec:hover{border-color:var(--red);box-shadow:0 0 12px rgba(255,61,92,.2);color:#ff7088}
+.z-counter button.z-inc{color:var(--green)}
+.z-counter button.z-inc:hover{border-color:var(--green);box-shadow:0 0 12px rgba(40,212,120,.2);color:#5fffa0}
+
+.z-scores{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border3);padding:8px 10px}
+
+.z-metric{font-size:9px;color:var(--muted2);text-transform:uppercase;letter-spacing:.6px;text-align:center;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;line-height:1;transition:color .18s var(--ease)}
+.z-metric b{font-size:13px;color:var(--text);font-weight:700;font-family:'DM Mono',monospace;transition:color .25s var(--ease);line-height:1;display:flex;align-items:center;justify-content:center;gap:3px}
+.z-pcard:hover .z-metric{color:var(--muted)}
+.z-rt-g{color:var(--green)}
+.z-rt-r{color:var(--red)}
+.z-rt-m{color:var(--amber)}
+
+.z-final{
+border:1px solid var(--border2);border-radius:var(--r3);
+background:linear-gradient(170deg,var(--surf),var(--bg1));
+padding:16px;overflow:auto;width:100%}
+.z-ftable{display:grid;align-content:start;gap:0}
+
+.z-frow{
+display:grid;grid-template-columns:2fr repeat(5,1fr);gap:12px;
+align-items:center;border-bottom:1px solid var(--border3);
+padding:11px 8px;font-size:13px;font-weight:500;
+transition:background .18s var(--ease),transform .18s var(--spring)}
+.z-frow:last-child{border-bottom:none}
+.z-frow:not(.z-fhead):hover{background:rgba(85,132,255,.04);transform:translateX(2px)}
+.z-frow.z-fhead{
+color:var(--blue);font-weight:700;text-transform:uppercase;font-size:9px;
+letter-spacing:1px;padding-bottom:13px;border-bottom:1px solid var(--border2)}
+.z-frow:not(.z-fhead) span{display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace}
+.z-frow b{font-size:13px;text-align:left;font-weight:700;letter-spacing:.2px;display:flex;align-items:center}
+.z-frow.z-mvp b{color:var(--green)}
+.z-frow.z-worst b{color:var(--red)}
+.z-fgood{color:var(--green)}
+.z-fbad{color:var(--red)}
+
+.z-info{display:grid;gap:7px;border-top:1px solid var(--border2);padding-top:8px;color:var(--muted);font-size:11px;line-height:1.5;font-family:'DM Mono',monospace;overflow-y:auto}
+.z-info div{
+border-left:2px solid rgba(85,132,255,.4);padding:7px 12px;
+border-radius:0 var(--r) var(--r) 0;background:rgba(85,132,255,.025);
+display:flex;flex-direction:column;justify-content:flex-start;gap:3px;
+transition:background .2s var(--ease),border-color .2s var(--ease),transform .2s var(--spring)}
+.z-info div:hover{background:rgba(85,132,255,.055);border-color:var(--blue);transform:translateX(2px)}
+.z-info b{display:flex;align-items:center;color:var(--text);font-size:10px;font-family:'Outfit',sans-serif;font-weight:700;letter-spacing:.5px;line-height:1;margin-bottom:1px;white-space:nowrap}
+
+.z-footer{display:flex;align-items:center;justify-content:center;gap:5px;font-size:10px;color:var(--muted2);letter-spacing:.6px;font-family:'DM Mono',monospace;line-height:1}
+.z-footer em{color:var(--blue);font-style:normal;transition:color .2s var(--ease)}
+.z-footer:hover em{color:#80aaff}
+
+.z-ico{width:13px;height:13px;display:block;flex-shrink:0}
+.z-rt{display:inline-flex;align-items:center;justify-content:center;gap:2px;line-height:1}
+
+@keyframes z-enter{
+  0%{opacity:0;transform:translateY(14px) scale(.97)}
+  60%{opacity:1}
+  100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes z-fade-in{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:translateY(0)}}
+@keyframes z-pop{
+  0%{transform:scale(1)}
+  35%{transform:scale(1.28) translateY(-1px)}
+  65%{transform:scale(.92)}
+  100%{transform:scale(1)}}
+@keyframes z-inc-flash{
+  0%{box-shadow:0 0 0 0 rgba(40,212,120,.45)}
+  55%{box-shadow:0 0 0 4px rgba(40,212,120,0)}
+  100%{box-shadow:0 0 0 0 rgba(40,212,120,0)}}
+@keyframes z-dec-flash{
+  0%{box-shadow:0 0 0 0 rgba(255,61,92,.45)}
+  55%{box-shadow:0 0 0 4px rgba(255,61,92,0)}
+  100%{box-shadow:0 0 0 0 rgba(255,61,92,0)}}
+@keyframes z-num-pop{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.16) translateY(-2px)}
+  70%{transform:scale(.96)}
+  100%{transform:scale(1)}}
+@keyframes z-num-shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-3px)}
+  40%{transform:translateX(3px)}
+  60%{transform:translateX(-2px)}
+  80%{transform:translateX(2px)}}
+@keyframes z-row-in{
+  from{opacity:0;transform:translateX(-6px)}
+  to{opacity:1;transform:translateX(0)}}
+
+.z-pcard{animation:z-enter .5s var(--snap) both}
+.z-pcard:nth-child(1){animation-delay:.03s}
+.z-pcard:nth-child(2){animation-delay:.08s}
+.z-pcard:nth-child(3){animation-delay:.13s}
+.z-pcard:nth-child(4){animation-delay:.18s}
+.z-pcard:nth-child(5){animation-delay:.23s}
+.z-pcard:nth-child(6){animation-delay:.28s}
+
+.z-counter button.z-popped{animation:z-pop .26s var(--spring)}
+.z-counter button.z-inc.z-popped{animation:z-pop .26s var(--spring),z-inc-flash .32s var(--ease)}
+.z-counter button.z-dec.z-popped{animation:z-pop .26s var(--spring),z-dec-flash .32s var(--ease)}
+
+.z-ftable .z-frow:not(.z-fhead){animation:z-row-in .28s var(--ease) both}
+.z-ftable .z-frow:nth-child(2){animation-delay:.03s}
+.z-ftable .z-frow:nth-child(3){animation-delay:.07s}
+.z-ftable .z-frow:nth-child(4){animation-delay:.11s}
+.z-ftable .z-frow:nth-child(5){animation-delay:.15s}
+.z-ftable .z-frow:nth-child(6){animation-delay:.19s}
+.z-ftable .z-frow:nth-child(7){animation-delay:.23s}
+
+.z-tabs{animation:z-fade-in .35s var(--ease) .05s both}
+.z-summary{animation:z-fade-in .35s var(--ease) .08s both}
+.z-top{animation:z-fade-in .35s var(--ease) both}
+.z-info{animation:z-fade-in .35s var(--ease) .12s both}
+.z-footer{animation:z-fade-in .35s var(--ease) .16s both}
 
 @media(min-width:900px){
-  html,body{height:100%;overflow:hidden}
-  body{padding:12px 20px}
-  .app{
-    width:min(98vw,1720px);height:calc(100vh - 24px);max-width:none;
-    display:grid;grid-template-rows:40px 40px 58px minmax(0,1fr) 74px 18px;gap:8px;margin:0 auto;
-  }
-  .top{width:min(1040px,100%);margin:0 auto;grid-template-columns:minmax(0,1fr) 96px;gap:12px}
-  .title-input{display:block;height:40px;padding:4px 14px;font-size:32px;line-height:1}
-  .reset{height:40px;font-size:13px;padding:0 10px}
-  .tabs{width:min(860px,100%);margin:0 auto;grid-template-columns:repeat(4,1fr);gap:10px}
-  .tab{height:40px;font-size:15px}
-  .summary{width:min(860px,100%);margin:0 auto;grid-template-columns:repeat(2,1fr);gap:10px}
-  .summary-card{height:58px;padding:9px 14px}.summary-card span{font-size:11px}.summary-card b{font-size:23px}
-  .main{min-height:0;height:100%;overflow:hidden}
-  .cards{height:100%;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;overflow:hidden}
-  .player-card{height:100%;min-height:0;padding:8px;gap:5px;border-radius:8px;overflow:hidden}
-  .row{gap:10px}.field label{font-size:9px;margin-bottom:2px}.role-box,input{height:27px;padding:4px 8px;font-size:13px}.counter{grid-template-columns:30px 1fr 30px}button{height:27px;min-height:27px;font-size:13px}
-  .score-box{padding-top:5px;gap:5px}.metric{font-size:10px}.metric b{font-size:14px}
-  .info{height:74px;grid-template-columns:repeat(3,1fr);gap:12px;font-size:12px;line-height:1.22;padding-top:7px;overflow:hidden}
-  .footer{height:18px;font-size:11px;line-height:18px}
-  .final-view{width:min(1280px,100%);height:100%;max-height:100%;margin:0 auto;overflow:auto}
-  .final-row{grid-template-columns:1.5fr repeat(5,.75fr);padding:10px 0;font-size:15px}.final-row.header{font-size:12px}.final-row b{font-size:16px}
+html,body{height:100%;overflow:hidden}
+body{padding:12px 24px}
+.z-app{
+width:min(96vw,1720px);height:calc(100vh - 24px);max-width:none;
+display:grid;grid-template-rows:42px 40px 52px minmax(0,1fr) auto 18px;
+gap:8px;margin:0 auto}
+.z-top{width:min(960px,100%);margin:0 auto;grid-template-columns:1fr 110px;gap:10px}
+.z-title{display:block;height:42px;font-size:26px}
+.z-reset{height:42px;font-size:11px;min-width:110px}
+.z-tabs{width:min(720px,100%);margin:0 auto;grid-template-columns:repeat(4,1fr);gap:7px}
+.z-tab{height:40px;font-size:12px}
+.z-summary{width:min(720px,100%);margin:0 auto;gap:8px}
+.z-card-sum{height:52px;padding:8px 18px;flex-direction:row;align-items:center;justify-content:space-between}
+.z-card-sum span{font-size:9px}
+.z-card-sum b{font-size:30px}
+.z-main{min-height:0;height:100%;overflow:hidden}
+.z-grid{height:100%;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:9px;overflow:hidden;place-content:center}
+.z-inner{padding:10px 10px 6px;gap:6px}
+.z-row{gap:7px}
+.z-field label{font-size:8px;margin-bottom:2px}
+.z-rolebox,.z-inner input{height:26px;font-size:11px;padding:0 8px}
+.z-counter{grid-template-columns:28px 1fr 28px;gap:4px}
+.z-counter button{height:26px;font-size:15px}
+.z-scores{padding:6px 10px}
+.z-metric{font-size:8px}
+.z-metric b{font-size:11px}
+.z-info{grid-template-columns:repeat(3,1fr);gap:9px;font-size:10px;line-height:1.4;padding-top:6px;overflow:visible}
+.z-info div{padding:5px 10px;justify-content:center}
+.z-info b{font-size:10px}
+.z-footer{height:18px;font-size:10px;display:flex;align-items:center;justify-content:center}
+.z-final{width:min(1080px,100%);height:100%;max-height:100%;margin:0 auto;overflow:auto;padding:12px 20px}
+.z-frow{grid-template-columns:2.4fr repeat(5,1fr);gap:14px;padding:11px 10px;font-size:13px}
+.z-frow.z-fhead{font-size:9px;padding-bottom:12px}
+.z-frow b{font-size:14px}
 }
-@media(max-width:520px){.final-row span:nth-child(6){display:none}}
+
+@media(max-width:520px){.z-frow span:nth-child(6){display:none}}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="top">
-    <input id="gameTitle" class="title-input" value="TIME1 x TIME2">
-    <button class="reset" onclick="resetCurrentSet()">RESET SET</button>
+<div class="z-app">
+  <div class="z-top">
+    <input id="z-title" class="z-title" value="TIME1 x TIME2"/>
+    <button class="z-reset" id="z-reset">RESET SET</button>
   </div>
-
-  <section class="tabs">
-    <button class="tab active" onclick="switchView('set1')">SET 1</button>
-    <button class="tab" onclick="switchView('set2')">SET 2</button>
-    <button class="tab" onclick="switchView('set3')">SET 3</button>
-    <button class="tab" onclick="switchView('final')">FINAL</button>
+  <section class="z-tabs" id="z-tabs">
+    <button class="z-tab active" data-view="set1">SET 1</button>
+    <button class="z-tab" data-view="set2">SET 2</button>
+    <button class="z-tab" data-view="set3">SET 3</button>
+    <button class="z-tab" data-view="final">FINAL</button>
   </section>
-
-  <section class="summary">
-    <div class="summary-card"><span>Total Erros</span><b id="sumMistakes">0</b></div>
-    <div class="summary-card"><span>Rating Médio</span><b id="avgRating">0.0</b></div>
+  <section class="z-summary">
+    <div class="z-card-sum"><span>Total Erros</span><b id="z-errors">0</b></div>
+    <div class="z-card-sum"><span>Rating Médio</span><b id="z-avg">0.0</b></div>
   </section>
-
-  <main class="main">
-    <section class="cards" id="cards"></section>
-    <section class="final-view hidden" id="finalView"><div class="final-grid" id="finalGrid"></div></section>
+  <main class="z-main">
+    <div class="z-view z-active" id="z-cards-layer">
+      <section class="z-grid" id="z-cards"></section>
+    </div>
+    <div class="z-view z-hidden" id="z-final-layer">
+      <section class="z-final"><div class="z-ftable" id="z-final-table"></div></section>
+    </div>
   </main>
-
-  <section class="info">
-    <div><b>Mistake DEF (geral)</b>Pontos sofridos por erro direto: Posicionamento errado, falta de reação, fora do spot ou punish recebido. Para setter: Blocks que geram ponto (ghost ou erro de posicionamento).</div>
-    <div><b>Mistake OF (spikers)</b>Erro ofensivo claro: Spike no block sem necessidade, spike out, ou qualquer jogada ofensiva que resulte em punish/ponto adversário por erro individual.</div>
-    <div><b>Mistake OF (DS/Setter)</b>Set ou jump set errado que prejudica a jogada, quebra o ataque ou entrega vantagem ao adversário. Se o erro não muda o resultado da jogada ou não impacta o ponto, não deve ser contado.</div>
+  <section class="z-info">
+    <div><b>Mistake DEF (geral)</b>Pontos sofridos por erro direto: posicionamento errado, falta de reação, fora do spot ou punish recebido. Para setter: blocks que geram ponto (ghost ou erro de posicionamento).</div>
+    <div><b>Mistake OF (spikers)</b>Erro ofensivo claro: spike no block sem necessidade, spike out, ou qualquer jogada ofensiva que resulte em punish/ponto adversário por erro individual.</div>
+    <div><b>Mistake OF (DS/Setter)</b>Set ou jump set errado que prejudica a jogada, quebra o ataque ou entrega vantagem ao adversário. Se o erro não impacta o ponto, não deve ser contado.</div>
   </section>
-
-  <div class="footer">Made By <span>Zenoir</span> © 2026</div>
+  <div class="z-footer"><em style="color:var(--muted2)">Made By</em><em>Zenoir</em><em style="color:var(--muted2)">&copy; 2026</em></div>
 </div>
-
 <script>
-const STORAGE_KEY='data_v1';
+const Z_KEY='zn_v3';
 
-const emptyRows=[
+const Z_ROLES=[
   ['Ponteiro','Player1',0,0,0,0],
   ['Oposto','Player2',0,0,0,0],
   ['Líbero','Player3',0,0,0,0],
@@ -124,339 +367,279 @@ const emptyRows=[
   ['Setter','Player6',0,0,0,0]
 ];
 
-function cloneRows(){return JSON.parse(JSON.stringify(emptyRows));}
-
-let data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')||{
-  title:'TIME1 x TIME2',
-  sets:[cloneRows(),cloneRows(),cloneRows()]
+const Z_FIELDS={
+  'Setter':[['Scored',2],['Mistake OF',4],['Mistake DEF',5]],
+  'Ds Tsk':[['Scored',2],['Scored On',3],['Mistake OF',4],['Mistake DEF',5]],
+  default:[['Scored',2],['Scored On',3],['Mistake OF',4],['Mistake DEF',5]]
 };
 
-let currentSet=0;
-let currentView='set1';
+const Z_CSS={
+  'Ponteiro':'ponteiro','Oposto':'oposto','Líbero':'libero',
+  'Ds Spiker':'dsspiker','Ds Tsk':'dstsk','Setter':'setter'
+};
 
-const root=document.getElementById('cards');
-const finalView=document.getElementById('finalView');
-const finalGrid=document.getElementById('finalGrid');
-const title=document.getElementById('gameTitle');
-title.value=data.title;
+const z_clamp=(z,lo=0,hi=10)=>+Math.max(lo,Math.min(hi,z)).toFixed(1);
+const z_active=z=>!!(+z[2]||+z[3]||+z[4]||+z[5]);
+const z_roleCSS=z=>Z_CSS[z]||z.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,'');
+const z_clone=()=>JSON.parse(JSON.stringify(Z_ROLES));
 
-function roleKey(role){return role.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,'');}
-function clampRating(value){return Number(Math.max(0,Math.min(10,value)).toFixed(1));}
-function isSetter(role){return role==='Setter';}
-function isDsTsk(role){return role==='Ds Tsk';}
-function hasActivity(r){return !!(+r[2] || +r[3] || +r[4] || +r[5]);}
+const z_rating=z=>{
+  const[z1,,z2,z3,z4,z5]=z.map(Number);
+  if(!z_active(z)) return 0;
+  if(z1==='Setter') return z_clamp(9.2-z4*.28-z5*.22+z2*.35);
+  if(z1==='Ds Tsk') return z_clamp(9.0-z3*.18-z4*.28-z5*.20+z2*.35);
+  const z6=z2-z3;
+  return z_clamp(6.5+Math.max(0,z6)*.42-Math.max(0,-z6)*.32+Math.min(1.2,z2*.08)-z4*.18-z5*.22);
+};
 
-/*
-Rating motivacional:
-- 0 a 10.
-- Player neutro (mesmo tanto de scored e scored on) fica perto de 6.5.
-- Scored pesa mais que erros.
-- Erros reduzem, mas não destroem o rating.
-*/
-function rating(r){
-  const role=r[0], scored=+r[2], on=+r[3], of=+r[4], df=+r[5];
+const z_mvp=z=>{
+  const[z1,,z2,z3,z4,z5]=z.map(Number);
+  const z6=z_rating(z);
+  if(!z_active(z)) return -999;
+  if(z1==='Setter') return z6-(z4+z5)*.2;
+  if(z1==='Ds Tsk') return z6-z3*.08-(z4+z5)*.12;
+  return z6+(z2-z3)*.25+z2*.05-z4*.08-z5*.1;
+};
 
-  if(!hasActivity(r)) return 0;
+const z_eff=z=>z_active(z)?Math.round(z_rating(z)*10):0;
 
-  if(isSetter(role)){
-    let base=9.2-(of*0.28)-(df*0.22);
-    base+=scored*0.35; // bonus for rare scoring
-    return clampRating(base);
-  }
-
-  if(isDsTsk(role)){
-    let base=9.0-(on*0.18)-(of*0.28)-(df*0.20);
-    base+=scored*0.35; // bonus for scoring
-    return clampRating(base);
-  }
-
-  const net=scored-on;
-  const positive=Math.max(0,net);
-  const negative=Math.max(0,-net);
-
-  let base=6.5+(positive*0.42)-(negative*0.32);
-
-  // Scoring volume bonus: rewards active/high-impact players without overbuffing.
-  base+=Math.min(1.2,scored*0.08);
-
-  // Mistakes are a light penalty; they should not destroy the rating by themselves.
-  base-=(of*0.18)+(df*0.22);
-
-  return clampRating(base);
-}
-
-function mvpScore(r){
-  const role=r[0], scored=+r[2], on=+r[3], of=+r[4], df=+r[5], rt=rating(r);
-
-  if(!hasActivity(r)) return -999;
-
-  if(isSetter(role)) return rt-(of+df)*0.2;
-  if(isDsTsk(role)) return rt-(on*0.08)-(of+df)*0.12;
-
-  return rt+((scored-on)*0.25)+(scored*0.05)-(of*0.08)-(df*0.1);
-}
-
-function efficiency(r){return hasActivity(r) ? Math.round(rating(r)*10) : 0;}
-
-function consistency(r){
-  if(!hasActivity(r)) return '-';
-
-  const rt=rating(r);
-  const role=r[0], on=+r[3], of=+r[4], df=+r[5];
-  const bad=isSetter(role) ? of+df : on+of+df;
-
-  // Consistência agora acompanha o rating.
-  // Isso evita casos tipo rating 10 e consistência baixa.
-  if(rt>=8) return 'Alta';
-  if(rt>=5.5) return 'Média';
-
-  // Só marca baixa quando o rating realmente caiu.
+const z_cons=z=>{
+  if(!z_active(z)) return '–';
+  const z1=z_rating(z);
+  if(z1>=8) return 'Alta';
+  if(z1>=5.5) return 'Média';
   return 'Baixa';
-}
+};
 
-function ratingEmoji(rt,r){
-  if(!hasActivity(r)) return '';
-  if(rt>=8.5)return '🔥';
-  if(rt>=7)return '✅';
-  if(rt>=5.5)return '⚖️';
-  if(rt>=4)return '❄️';
-  return '💀';
-}
+const Z_SVG={
+  fire:`<svg class="z-ico" viewBox="0 0 18 18" fill="none"><defs><radialGradient id="zf1" cx="50%" cy="80%" r="60%"><stop offset="0%" stop-color="#fff17a"/><stop offset="45%" stop-color="#ff8c00"/><stop offset="100%" stop-color="#c0180a"/></radialGradient><radialGradient id="zf2" cx="50%" cy="90%" r="55%"><stop offset="0%" stop-color="#ffe55a"/><stop offset="100%" stop-color="#ff5500"/></radialGradient></defs><path d="M9 17c-3.6 0-6-2.2-6-5.2 0-2 1.1-3.6 2.3-4.9.4-.5.4.1.4.6 0 .7.2 1.4.7 1.8C7 8.2 7 6.2 8 4.2c.8-1.6 2.2-2.8 2.7-3.2.2-.2.4 0 .4.2-.1 1.4.5 3 1.5 4 .5.5 1.1.9 1.4 1.6.4.9.5 2 .1 3-.3.7-.9 1.3-1 1.4.1-.6 0-1.3-.4-1.7-.1.8-.4 1.6-.9 2.2C11.2 12.4 11 13 11 14c0 .6.1 1.2.4 1.6C10.7 16.5 9.9 17 9 17z" fill="url(#zf1)"/><path d="M9 15.5c-1.8 0-3-1.2-3-2.8 0-1.1.6-2 1.2-2.7 0 .4.1.8.4 1.1.1-.5.3-1 .6-1.4.5-.7.8-1.6.8-2.4.5.7.8 1.5.8 2.4 0 .5-.1 1-.3 1.4.3-.2.6-.6.7-1 .3.5.5 1.1.5 1.7 0 1.7-1.2 3.7-1.7 3.7z" fill="url(#zf2)"/></svg>`,
+  check:`<svg class="z-ico" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="#1a4d2e" stroke="#28d478" stroke-width="1.4"/><path d="M5.5 9.2l2.3 2.4 4.7-5" stroke="#28d478" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  scale:`<svg class="z-ico" viewBox="0 0 18 18" fill="none"><rect x="8.3" y="2" width="1.4" height="13" rx=".7" fill="#ffba30"/><rect x="3" y="14.5" width="12" height="1.4" rx=".7" fill="#ffba30"/><path d="M9 2.5 5 7h8z" fill="#ffba30" opacity=".8"/><ellipse cx="5.5" cy="9.5" rx="2.5" ry="1.5" stroke="#ffba30" stroke-width="1.2" fill="none"/><ellipse cx="12.5" cy="8" rx="2.5" ry="1.5" stroke="#ffba30" stroke-width="1.2" fill="none"/><path d="M5.5 7v2.5M12.5 5.5V8" stroke="#ffba30" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+  frost:`<svg class="z-ico" viewBox="0 0 18 18" fill="none"><line x1="9" y1="1.5" x2="9" y2="16.5" stroke="#82cfff" stroke-width="1.4" stroke-linecap="round"/><line x1="1.5" y1="9" x2="16.5" y2="9" stroke="#82cfff" stroke-width="1.4" stroke-linecap="round"/><line x1="3.4" y1="3.4" x2="14.6" y2="14.6" stroke="#82cfff" stroke-width="1.4" stroke-linecap="round"/><line x1="14.6" y1="3.4" x2="3.4" y2="14.6" stroke="#82cfff" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="9" r="2.2" fill="#1a3a5c" stroke="#82cfff" stroke-width="1.2"/></svg>`,
+  skull:`<svg class="z-ico" viewBox="0 0 18 18" fill="none"><path d="M9 2C5.7 2 3 4.5 3 7.6c0 1.8.9 3.4 2.2 4.4v2.2c0 .4.4.8.8.8h6c.4 0 .8-.4.8-.8V12c1.3-1 2.2-2.6 2.2-4.4C15 4.5 12.3 2 9 2z" fill="#2d1a2e" stroke="#ff3d5c" stroke-width="1.2"/><ellipse cx="6.8" cy="8" rx="1.5" ry="1.6" fill="#ff3d5c" opacity=".9"/><ellipse cx="11.2" cy="8" rx="1.5" ry="1.6" fill="#ff3d5c" opacity=".9"/><rect x="6.5" y="12.5" width="1.2" height="2.2" rx=".5" fill="#ff3d5c" opacity=".7"/><rect x="8.4" y="12.5" width="1.2" height="2.2" rx=".5" fill="#ff3d5c" opacity=".7"/><rect x="10.3" y="12.5" width="1.2" height="2.2" rx=".5" fill="#ff3d5c" opacity=".7"/></svg>`
+};
 
-function ratingClass(rt,r){
-  if(!hasActivity(r)) return 'mid';
-  if(rt>=8)return 'good';
-  if(rt<4)return 'bad';
-  return 'mid';
-}
+const z_mark=(z1,z2)=>{
+  if(!z_active(z2)) return '';
+  if(z1>=8.5) return Z_SVG.fire;
+  if(z1>=7) return Z_SVG.check;
+  if(z1>=5.5) return Z_SVG.scale;
+  if(z1>=4) return Z_SVG.frost;
+  return Z_SVG.skull;
+};
 
-function save(){
-  data.title=title.value;
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-}
+const z_rtCls=z=>{
+  if(z>=8) return 'z-rt-g';
+  if(z<4) return 'z-rt-r';
+  return 'z-rt-m';
+};
 
-function activeRows(){return data.sets[currentSet];}
+class ZenoirApp{
+  constructor(){
+    this.z={
+      cards:document.getElementById('z-cards'),
+      cardsL:document.getElementById('z-cards-layer'),
+      finalL:document.getElementById('z-final-layer'),
+      finalT:document.getElementById('z-final-table'),
+      title:document.getElementById('z-title'),
+      errors:document.getElementById('z-errors'),
+      avg:document.getElementById('z-avg'),
+      tabs:document.getElementById('z-tabs'),
+      reset:document.getElementById('z-reset')
+    };
+    const z1=JSON.parse(localStorage.getItem(Z_KEY)||'null');
+    this.z1=z1||{title:'TIME1 x TIME2',sets:[z_clone(),z_clone(),z_clone()]};
+    this.z2=0;
+    this.z3='set1';
+    this.z4=0;
+    this.z5='0.0';
+    this.z.title.value=this.z1.title;
+    this._bind();
+    this._render();
+  }
 
-function switchView(view){
-  currentView=view;
-  document.querySelectorAll('.tab').forEach((b,i)=>
-    b.classList.toggle('active',view==='final'?i===3:i===Number(view.replace('set',''))-1)
-  );
+  get _rows(){return this.z1.sets[this.z2]}
 
-  if(view==='final'){
-    root.classList.add('hidden');
-    finalView.classList.remove('hidden');
-    renderFinal();
-  }else{
-    currentSet=Number(view.replace('set',''))-1;
-    root.classList.remove('hidden');
-    finalView.classList.add('hidden');
-    render();
+  _save(){
+    this.z1.title=this.z.title.value;
+    localStorage.setItem(Z_KEY,JSON.stringify(this.z1));
+  }
+
+  _bind(){
+    this.z.tabs.addEventListener('click',z=>{
+      const z1=z.target.closest('.z-tab');
+      if(z1) this._switchView(z1.dataset.view);
+    });
+    this.z.reset.addEventListener('click',()=>this._resetSet());
+    this.z.title.addEventListener('input',()=>this._save());
+    this.z.cards.addEventListener('click',z=>{
+      const z1=z.target.closest('.z-counter button');
+      if(!z1) return;
+      const z2=z1.closest('.z-pcard');
+      if(!z2) return;
+      const z3=+z2.dataset.idx;
+      const z4=+z1.dataset.col;
+      const z5=z2.querySelector(`input[data-col="${z4}"]`);
+      if(!z5) return;
+      this._step(z5,z3,z4,z1.classList.contains('z-inc')?1:-1,z1);
+    });
+    this.z.cards.addEventListener('input',z=>{
+      if(!z.target.matches('input[data-col]')) return;
+      const z1=z.target.closest('.z-pcard');
+      const z2=+z1.dataset.idx;
+      const z3=+z.target.dataset.col;
+      this._setVal(z.target,z2,z3);
+    });
+  }
+
+  _step(z,z1,z2,z3,z4){
+    const z5=this._rows;
+    z5[z1][z2]=Math.max(0,(+z.value||0)+z3);
+    z.value=z5[z1][z2];
+    this._save();
+    this._updateAll();
+    if(z4){z4.classList.remove('z-popped');void z4.offsetWidth;z4.classList.add('z-popped')}
+  }
+
+  _setVal(z,z1,z2){
+    const z3=this._rows;
+    z3[z1][z2]=z.type==='number'?+z.value||0:z.value;
+    this._save();
+    this._updateAll();
+  }
+
+  _switchView(z){
+    if(z===this.z3) return;
+    this.z3=z;
+    this.z.tabs.querySelectorAll('.z-tab').forEach(z1=>z1.classList.toggle('active',z1.dataset.view===z));
+    const z1=z!=='final';
+    const z2=z1?this.z.finalL:this.z.cardsL;
+    const z3=z1?this.z.cardsL:this.z.finalL;
+    z2.classList.add('z-out');
+    setTimeout(()=>{
+      z2.classList.add('z-hidden');
+      z2.classList.remove('z-out','z-active');
+      z3.classList.remove('z-hidden','z-out');
+      void z3.offsetWidth;
+      z3.classList.add('z-active');
+      if(z1){this.z2=+z.replace('set','')-1;this._render()}
+      else this._renderFinal();
+    },200);
+  }
+
+  _resetSet(){
+    const z=this.z3==='final'?'Resetar todos os 3 sets?':'Resetar este set para 0?';
+    if(!confirm(z)) return;
+    if(this.z3==='final') this.z1.sets=[z_clone(),z_clone(),z_clone()];
+    else this.z1.sets[this.z2]=z_clone();
+    this._save();
+    this.z4=0;this.z5='0.0';
+    this.z3==='final'?this._renderFinal():this._render();
+  }
+
+  _buildCard(z,z1){
+    const z2=(Z_FIELDS[z[0]]||Z_FIELDS.default).map(([z3,z4])=>`
+      <div class="z-field">
+        <label>${z3}</label>
+        <div class="z-counter">
+          <button type="button" data-col="${z4}" class="z-dec">&minus;</button>
+          <input type="number" data-col="${z4}" value="${z[z4]}" step="0.5" min="0"/>
+          <button type="button" data-col="${z4}" class="z-inc">+</button>
+        </div>
+      </div>`).join('');
+    return `<div class="z-pcard zr-${z_roleCSS(z[0])}" data-idx="${z1}">
+      <div class="z-inner">
+        <div class="z-row">
+          <div class="z-field"><label>Role</label><div class="z-rolebox">${z[0]}</div></div>
+          <div class="z-field"><label>Player</label><input data-col="1" value="${z[1]}"/></div>
+        </div>
+        ${z2}
+        <div class="z-scores">
+          <div class="z-metric">Rating<b class="z-rt"></b></div>
+          <div class="z-metric">Eficiência<b data-eff></b></div>
+          <div class="z-metric">Consistência<b data-cons></b></div>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  _render(){
+    this.z.cards.innerHTML=this._rows.map((z,z1)=>this._buildCard(z,z1)).join('');
+    this._updateAll();
+  }
+
+  _flashNum(z,z1,z2){
+    if(z1===z2) return;
+    z.classList.remove('z-hi','z-lo');
+    void z.offsetWidth;
+    const z3=parseFloat(z1),z4=parseFloat(z2);
+    z.classList.add(z3<z4?'z-lo':'z-hi');
+  }
+
+  _updateSummary(z){
+    let z1=0,z2=0,z3=0;
+    z.forEach((z4,z5)=>{
+      z1+=+z4[4]+ +z4[5];
+      const z6=z_rating(z4);
+      if(z_active(z4)){z2+=z6;z3++}
+      const z7=document.querySelector(`.z-pcard[data-idx="${z5}"]`);
+      if(!z7) return;
+      const z8=z7.querySelector('.z-rt');
+      z8.innerHTML=`${z_mark(z6,z4)}<span>${z6}</span>`;
+      z8.className='z-rt '+(z_active(z4)?z_rtCls(z6):'z-rt-m');
+      z7.querySelector('[data-eff]').textContent=z_eff(z4)+'%';
+      z7.querySelector('[data-cons]').textContent=z_cons(z4);
+    });
+    const z4=z3?(z2/z3).toFixed(1):'0.0';
+    const z5=this.z.errors,z6=this.z.avg;
+    this._flashNum(z5,z1,this.z4);
+    this._flashNum(z6,z4,this.z5);
+    z5.textContent=z1;z6.textContent=z4;
+    this.z4=z1;this.z5=z4;
+  }
+
+  _updateAll(){
+    if(this.z3==='final') this._renderFinal();
+    else this._updateSummary(this._rows);
+  }
+
+  _combined(){
+    return Z_ROLES.map((z,z1)=>{
+      const z2=[0,0,0,0];
+      this.z1.sets.forEach(z3=>{for(let z4=2;z4<=5;z4++) z2[z4-2]+=+z3[z1][z4]||0});
+      return [z[0],this.z1.sets[0][z1][1]||z[1],...z2];
+    });
+  }
+
+  _renderFinal(){
+    const z=this._combined().sort((z1,z2)=>(z_active(z2)-z_active(z1))||(z_mvp(z2)-z_mvp(z1)));
+    this._updateSummary(z);
+    let z1=null,z2=null;
+    z.forEach(z3=>{
+      if(!z_active(z3)) return;
+      const z4=z_rating(z3),z5=z_mvp(z3);
+      if(!z1||z5>z1.mv) z1={name:z3[1],mv:z5};
+      if(!z2||z4<z2.rt) z2={name:z3[1],rt:z4};
+    });
+    const z3=`<div class="z-frow z-fhead"><span>Player</span><span>Scored</span><span>On</span><span>OF</span><span>DEF</span><span>Rating</span></div>`;
+    const z4=z.map(z5=>{
+      const z6=z_rating(z5);
+      const z7=z1&&z_active(z5)&&z5[1]===z1.name;
+      const z8=z2&&z_active(z5)&&z5[1]===z2.name;
+      const z9=z7?'z-mvp':z8?'z-worst':'';
+      const z10=z7?`${z5[1]} (MVP)`:z8?`${z5[1]} (Worst)`:z5[1];
+      const z11=z_active(z5)?z_rtCls(z6):'';
+      return `<div class="z-frow ${z9}">
+        <b>${z10}</b>
+        <span>${z5[2]}</span><span>${z5[3]}</span><span>${z5[4]}</span><span>${z5[5]}</span>
+        <span class="${z11}" style="display:inline-flex;align-items:center;justify-content:center;gap:2px">${z_mark(z6,z5)}${z6}</span>
+      </div>`;
+    }).join('');
+    this.z.finalT.innerHTML=z3+z4;
   }
 }
 
-function change(input,rowIndex,colIndex,v){
-  const rows=activeRows();
-  rows[rowIndex][colIndex]=Math.max(0,(+input.value||0)+v);
-  input.value=rows[rowIndex][colIndex];
-  save();
-  updateAll();
-}
-
-function setVal(input,rowIndex,colIndex){
-  const rows=activeRows();
-  rows[rowIndex][colIndex]=input.type==='number'?Number(input.value||0):input.value;
-  save();
-  updateAll();
-}
-
-function makeInput(value,rowIndex,colIndex,type='text'){
-  const i=document.createElement('input');
-  i.type=type;
-  i.value=value;
-  i.oninput=()=>setVal(i,rowIndex,colIndex);
-  return i;
-}
-
-function roleField(value){
-  const d=document.createElement('div');
-  d.className='field';
-  d.innerHTML='<label>Role</label>';
-  const box=document.createElement('div');
-  box.className='role-box';
-  box.textContent=value;
-  d.appendChild(box);
-  return d;
-}
-
-function field(label,value,rowIndex,colIndex){
-  const d=document.createElement('div');
-  d.className='field';
-  d.innerHTML=`<label>${label}</label>`;
-  d.appendChild(makeInput(value,rowIndex,colIndex));
-  return d;
-}
-
-function counter(label,value,rowIndex,colIndex){
-  const d=document.createElement('div');
-  d.className='field';
-  d.innerHTML=`<label>${label}</label>`;
-  const c=document.createElement('div');
-  c.className='counter';
-  const m=document.createElement('button');
-  m.textContent='-';
-  m.type='button';
-  const i=makeInput(value,rowIndex,colIndex,'number');
-  i.step='0.5';
-  i.min='0';
-  const p=document.createElement('button');
-  p.textContent='+';
-  p.type='button';
-  m.onclick=()=>change(i,rowIndex,colIndex,-1);
-  p.onclick=()=>change(i,rowIndex,colIndex,1);
-  c.append(m,i,p);
-  d.appendChild(c);
-  return d;
-}
-
-function visibleLabelsForRole(role){
-  if(role==='Setter')return [
-    ['Scored',2],
-    ['Mistake OF',4],
-    ['Mistake DEF',5]
-  ];
-
-  if(role==='Ds Tsk')return [
-    ['Scored',2],
-    ['Scored On',3],
-    ['Mistake OF',4],
-    ['Mistake DEF',5]
-  ];
-
-  return [
-    ['Scored',2],
-    ['Scored On',3],
-    ['Mistake OF',4],
-    ['Mistake DEF',5]
-  ];
-}
-
-function render(){
-  root.innerHTML='';
-  activeRows().forEach((r,ri)=>{
-    const card=document.createElement('div');
-    card.className=`player-card role-${roleKey(r[0])}`;
-    card.dataset.index=ri;
-
-    const top=document.createElement('div');
-    top.className='row';
-    top.append(roleField(r[0]),field('Player',r[1],ri,1));
-    card.appendChild(top);
-
-    visibleLabelsForRole(r[0]).forEach(([label,col])=>{
-      card.appendChild(counter(label,r[col],ri,col));
-    });
-
-    const box=document.createElement('div');
-    box.className='score-box';
-    box.innerHTML=`
-      <div class="metric">Rating<b class="rating" data-rating></b></div>
-      <div class="metric">Eficiência<b data-eff></b></div>
-      <div class="metric">Consistência<b data-consistency></b></div>
-    `;
-    card.appendChild(box);
-    root.appendChild(card);
-  });
-  updateAll();
-}
-
-function updateSummary(rows){
-  let mistakes=0,totalRating=0,activeCount=0;
-  rows.forEach((r,i)=>{
-    mistakes+=+r[4]+ +r[5];
-    const rt=rating(r);
-    if(hasActivity(r)){totalRating+=rt;activeCount++;}
-
-    const card=document.querySelector(`[data-index="${i}"]`);
-    if(card){
-      const cls=ratingClass(rt,r);
-      card.classList.toggle('good',hasActivity(r) && rt>=8);
-      card.classList.toggle('bad',hasActivity(r) && rt<4);
-      card.querySelector('[data-rating]').textContent=`${ratingEmoji(rt,r)} ${rt}`;
-      card.querySelector('[data-rating]').className='rating '+cls;
-      card.querySelector('[data-eff]').textContent=efficiency(r)+'%';
-      card.querySelector('[data-consistency]').textContent=consistency(r);
-    }
-  });
-  document.getElementById('sumMistakes').textContent=mistakes;
-  document.getElementById('avgRating').textContent=activeCount ? (totalRating/activeCount).toFixed(1) : '0.0';
-}
-
-function updateAll(){
-  if(currentView==='final')renderFinal();
-  else updateSummary(activeRows());
-}
-
-function combinedRows(){
-  return emptyRows.map((baseRow,idx)=>{
-    const role=baseRow[0];
-    const player=data.sets[0][idx][1]||baseRow[1];
-    const sums=[0,0,0,0];
-    data.sets.forEach(set=>{
-      for(let c=2;c<=5;c++)sums[c-2]+=Number(set[idx][c]||0);
-    });
-    return [role,player,...sums];
-  });
-}
-
-function renderFinal(){
-  const rows=combinedRows().sort((a,b)=>(hasActivity(b)-hasActivity(a)) || (mvpScore(b)-mvpScore(a)));
-  updateSummary(rows);
-
-  let best=null,worst=null;
-  rows.forEach(r=>{
-    if(!hasActivity(r)) return;
-    const rt=rating(r), mvp=mvpScore(r);
-    if(!best||mvp>best.mvp)best={name:r[1],rt,mvp};
-    if(!worst||rt<worst.rt)worst={name:r[1],rt};
-  });
-
-  finalGrid.innerHTML='<div class="final-row header"><span>Player</span><span>Scored</span><span>On</span><span>OF</span><span>DEF</span><span>Rating</span></div>';
-
-  rows.forEach(r=>{
-    const rt=rating(r);
-    const div=document.createElement('div');
-    div.className='final-row';
-    if(best && hasActivity(r) && r[1]===best.name)div.classList.add('mvp');
-    if(worst && hasActivity(r) && r[1]===worst.name)div.classList.add('worst');
-
-    const name = best && hasActivity(r) && r[1]===best.name ? `${r[1]} (MVP)` :
-                 worst && hasActivity(r) && r[1]===worst.name ? `${r[1]} (Worst)` : r[1];
-
-    div.innerHTML=`
-      <b>${name}</b>
-      <span>${r[2]}</span>
-      <span>${r[3]}</span>
-      <span>${r[4]}</span>
-      <span>${r[5]}</span>
-      <span class="${hasActivity(r) && rt>=8?'final-good':hasActivity(r) && rt<4?'final-bad':''}">${ratingEmoji(rt,r)} ${rt}</span>
-    `;
-    finalGrid.appendChild(div);
-  });
-}
-
-function resetCurrentSet(){
-  const msg=currentView==='final'?'Resetar todos os 3 sets?':'Resetar este set para 0?';
-  if(confirm(msg)){
-    if(currentView==='final')data.sets=[cloneRows(),cloneRows(),cloneRows()];
-    else data.sets[currentSet]=cloneRows();
-    save();
-    currentView==='final'?renderFinal():render();
-  }
-}
-
-title.oninput=save;
-render();
+new ZenoirApp();
 </script>
 </body>
 </html>
