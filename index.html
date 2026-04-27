@@ -836,7 +836,7 @@ body::after{
 .z-top-score{font-size:42px !important;min-width:34px !important;}
 .z-match-sep{font-size:31px !important;}
 .z-sc{position:relative;grid-template-columns:auto 1fr !important;min-height:82px !important;}
-.z-sc > div:not(.z-performance){border-left:2px solid rgba(85,132,255,.58);padding-left:18px;display:grid;gap:6px;align-content:center;}
+.z-sc > div:not(.z-performance):not(.z-weakness){border-left:2px solid rgba(85,132,255,.58);padding-left:18px;display:grid;gap:6px;align-content:center;}
 .z-sc span{display:block !important;font-size:10px !important;line-height:1 !important;letter-spacing:1.3px !important;color:#8ea6e8 !important;}
 .z-sc b{display:block !important;font-size:31px !important;line-height:1 !important;}
 .z-performance.perf-good{color:var(--green)}.z-performance.perf-mid{color:var(--amber)}.z-performance.perf-bad{color:var(--red)}.z-performance.perf-zero{color:var(--muted2)}
@@ -852,7 +852,7 @@ body::after{
   min-height:76px !important;
   overflow:hidden !important;
 }
-.z-sc > div:not(.z-performance){
+.z-sc > div:not(.z-performance):not(.z-weakness){
   border-left:2px solid rgba(85,132,255,.58) !important;
   padding-left:18px !important;
   display:grid !important;
@@ -1083,13 +1083,69 @@ body::after{
     font-size:17px !important;
   }
 }
-body{isolation:isolate!important;position:relative!important;filter:none!important;opacity:1!important}
-body::before,body::after{z-index:0!important;mix-blend-mode:screen!important;filter:none!important}
-.z-app{position:relative!important;z-index:2!important;filter:none!important;opacity:1!important}
-.z-layout,.z-center,.z-footer{position:relative!important;z-index:3!important;filter:none!important;opacity:1!important}
-.z-app::before{z-index:0!important;mix-blend-mode:screen!important;filter:none!important;opacity:.32!important}
-.z-view,.z-view.z-active{opacity:1!important;filter:none!important}
-.z-view.z-hidden{display:none!important}
+.z-info-panel{
+  order:7 !important;
+  display:grid !important;
+  grid-template-columns:repeat(3,1fr) !important;
+  gap:10px !important;
+  margin:8px 0 0 !important;
+}
+.z-info-card{
+  min-height:58px !important;
+  padding:10px 14px !important;
+  background:linear-gradient(160deg,rgba(15,20,36,.82),rgba(7,10,21,.86)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 8px 22px rgba(0,0,0,.18) !important;
+}
+.z-info-card strong{font-size:11px !important;letter-spacing:.8px !important;}
+.z-info-card small{font-size:10px !important;line-height:1.35 !important;}
+.z-main{order:6 !important;}
+@media(min-width:1200px){
+  .z-center{
+    grid-template-rows:62px 40px 66px auto auto !important;
+    align-content:start !important;
+    gap:7px !important;
+  }
+  .z-main{
+    height:auto !important;
+    min-height:0 !important;
+    overflow:visible !important;
+  }
+  .z-grid{
+    grid-template-columns:repeat(3,1fr) !important;
+    grid-template-rows:auto !important;
+    align-content:start !important;
+    gap:13px !important;
+    height:auto !important;
+  }
+  .z-info-panel{
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr) !important;
+  }
+  .z-info-card{
+    min-height:58px !important;
+  }
+}
+@media(min-width:1700px){
+  .z-center{gap:9px !important;}
+  .z-grid{gap:14px !important;}
+  .z-info-card{min-height:66px !important;padding:12px 16px !important;}
+  .z-info-card strong{font-size:12px !important;}
+  .z-info-card small{font-size:11px !important;}
+}
+@media(max-width:899px){
+  .z-info-panel{grid-template-columns:1fr !important;}
+}
+.z-sc-errors{grid-template-columns:auto minmax(120px,auto) minmax(360px,1fr) !important;column-gap:18px !important;}
+.z-weakness{justify-self:end;display:grid !important;grid-template-columns:34px minmax(280px,auto) !important;align-items:center !important;gap:12px !important;min-width:360px;max-width:430px;padding-left:0;border-left:0 !important;}
+.z-weakness svg{width:32px;height:32px;color:var(--red);filter:drop-shadow(0 0 10px rgba(255,61,92,.22));align-self:center;}
+.z-weakness > div{border-left:2px solid rgba(85,132,255,.58) !important;padding-left:18px !important;display:grid !important;gap:6px !important;align-content:center !important;min-height:42px !important;}
+.z-weakness small{display:block !important;font-family:'DM Mono',monospace !important;font-size:10px !important;color:#8ea6e8 !important;text-transform:uppercase !important;letter-spacing:1.2px !important;line-height:1 !important;margin:0 !important;}
+.z-weakness strong{display:flex !important;align-items:center !important;flex-wrap:nowrap !important;gap:4px !important;font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;letter-spacing:.4px;line-height:1.05;color:var(--text) !important;white-space:nowrap;}
+.z-sc .z-weak-text{display:inline !important;color:var(--text) !important;white-space:nowrap !important;}
+.z-sc .z-weak-role{display:inline !important;font-weight:900 !important;color:var(--weak-role-color) !important;white-space:nowrap !important;text-transform:uppercase;}
+.z-sc .z-weak-sep{display:inline !important;color:var(--text) !important;font-weight:800 !important;white-space:nowrap !important;text-transform:none !important;}
+@media(min-width:1200px){.z-sc-errors{grid-template-columns:auto minmax(110px,auto) minmax(350px,1fr) !important;}.z-weakness{min-width:350px;max-width:420px;}.z-weakness strong{font-size:15px;}}
+@media(max-width:899px){.z-sc-errors{grid-template-columns:auto 1fr !important;}.z-weakness{grid-column:1 / -1;justify-self:stretch;margin-left:54px;min-width:0;max-width:none;}.z-weakness strong{flex-wrap:wrap !important;white-space:normal;}}
 </style>
 </head>
 <body>
@@ -1129,7 +1185,7 @@ RESET SET
 <button class="z-tab" data-view="teams">TIMES</button>
 </section>
 <section class="z-scores-bar">
-<div class="z-sc z-sc-errors"><svg class="z-summary-ico" viewBox="0 0 24 24" fill="none"><path d="M12 3l9 16H3L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 8v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 16.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><div><span>Erros Totais</span><b id="z-errors">0</b></div></div>
+<div class="z-sc z-sc-errors"><svg class="z-summary-ico" viewBox="0 0 24 24" fill="none"><path d="M12 3l9 16H3L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 8v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 16.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><div><span>Erros Totais</span><b id="z-errors">0</b></div><div class="z-weakness" id="z-weakness"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v6c0 4.2-3 7.2-8 8-5-.8-8-3.8-8-8V7l8-4z" stroke="currentColor" stroke-width="1.7"/><path d="M12 8v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 16.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><div><small>Ponto Fraco</small><strong>Nenhum erro registrado</strong></div></div></div>
 <div class="z-sc z-sc-rating"><svg class="z-summary-ico z-star" viewBox="0 0 24 24" fill="none"><path d="M12 3.2l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9L6.6 20l1-6.1-4.4-4.3 6.1-.9L12 3.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><div><span>Rating Médio</span><b id="z-avg">0.0</b></div><div class="z-performance"><small>Desempenho</small><strong id="z-perf-label">—</strong><svg class="z-perf-graph" viewBox="0 0 80 32" fill="none"><path class="z-graph-good" d="M4 24c11 0 12-8 22-8s12-7 23-7 14-8 27-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="z-graph-mid" d="M4 18c12-4 17 7 27 2s15-1 22-5 12-2 23-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="z-graph-bad" d="M4 8c10 4 15-1 24 7s14 2 23 7 14 6 25 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><g class="dot-good"><circle cx="4" cy="24" r="2" fill="currentColor"/><circle cx="26" cy="16" r="2" fill="currentColor"/><circle cx="49" cy="9" r="2" fill="currentColor"/><circle cx="76" cy="1" r="2" fill="currentColor"/></g><g class="dot-mid"><circle cx="4" cy="18" r="2" fill="currentColor"/><circle cx="31" cy="20" r="2" fill="currentColor"/><circle cx="53" cy="15" r="2" fill="currentColor"/><circle cx="76" cy="8" r="2" fill="currentColor"/></g><g class="dot-bad"><circle cx="4" cy="8" r="2" fill="currentColor"/><circle cx="28" cy="15" r="2" fill="currentColor"/><circle cx="51" cy="22" r="2" fill="currentColor"/><circle cx="76" cy="28" r="2" fill="currentColor"/></g></svg></div></div>
 </section>
 <div class="z-legend" id="z-final-legend">
@@ -1141,15 +1197,15 @@ RESET SET
 <section class="z-info-panel" aria-label="Descrições rápidas dos erros">
   <article class="z-info-card z-info-def">
     <strong>Mistake DEF (geral)</strong>
-    <small>Ponto cedido por erro defensivo direto: falta de reação, posicionamento incorreto ou leitura falha da jogada.</small>
+    <small>Erro Defensivo: ponto sofrido por falha de recepção, posicionamento, cobertura ou leitura defensiva.</small>
   </article>
   <article class="z-info-card z-info-of">
     <strong>Mistake OF (spikers)</strong>
-    <small>Erro ofensivo direto: ataque no bloqueio sem necessidade, bola fora ou finalização mal executada.</small>
+    <small>Erro Ofensivo: ataque errado, bola fora, finalização mal executada ou jogada ofensiva desperdiçada.</small>
   </article>
   <article class="z-info-card z-info-set">
     <strong>Mistake OF (DS/Setter)</strong>
-    <small>Erro técnico na construção da jogada: levantamento impreciso, set quebrado ou decisão errada.</small>
+    <small>Setter/DS TSK: rating valoriza pontos feitos e reduz punição de pontos tomados/erros para refletir função de suporte.</small>
   </article>
 </section>
 <main class="z-main">
@@ -1184,10 +1240,9 @@ const Z_ROLES=[
 ['Setter','Player6',0,0,0,0]
 ];
 const Z_FIELDS={
-'Setter':[['Assistências',2],['Tentativas de levantamento',4],['Erros de levantamento',5]],
-'Ds Tsk':[['Assistências',2],['Tentativas de levantamento',3],['Erros de levantamento',5]],
-default:[['Pontos de ataque',2],['Tentativas de ataque',3],['Erros de ataque',4]],
-'Líbero':[['Defesas',2],['Tentativas contra',4],['Erros de recepção',5]]
+'Setter':[['Pontos Feitos',2],['Erro Ofensivo',4],['Erro Defensivo',5]],
+'Ds Tsk':[['Pontos Feitos',2],['Pontos Tomados',3],['Erro Ofensivo',4],['Erro Defensivo',5]],
+default:[['Pontos Feitos',2],['Pontos Tomados',3],['Erro Ofensivo',4],['Erro Defensivo',5]]
 };
 const Z_CSS={
 'Ponteiro':'ponteiro','Oposto':'oposto','Líbero':'libero',
@@ -1231,33 +1286,29 @@ const z_roleCSS=z=>Z_CSS[z]||z.normalize('NFD').replace(/[\u0300-\u036f]/g,'').t
 const z_clone=()=>JSON.parse(JSON.stringify(Z_ROLES));
 const z_rating=z=>{
 const role=z[0];
-const a=+z[2]||0,b=+z[3]||0,c=+z[4]||0,d=+z[5]||0;
+const scored=+z[2]||0;
+const scoredOn=+z[3]||0;
+const mistakeOf=+z[4]||0;
+const mistakeDef=+z[5]||0;
 if(!z_active(z)) return 0;
-if(role==='Setter'||role==='Ds Tsk'){
-const assists=a;
-const attempts=role==='Setter'?c:b;
-const errors=d;
-return z_clamp(8.0+(assists/Math.max(attempts,1))*9+(assists*.18)-(errors*.40));
+if(role==='Setter'){
+  return z_clamp(9.0-(mistakeOf*.23)-(mistakeDef*.22)+(scored*.4));
 }
-if(role==='Líbero'||role==='Libero'){
-const digs=a;
-const against=c;
-const errors=d;
-return z_clamp(7.2+(digs/Math.max(against,1))*12+(digs*.12)-(errors*.45));
+if(role==='Ds Tsk'){
+  return z_clamp(9.0-(scoredOn*.46)-(mistakeOf*.22)-(mistakeDef*.22)+(scored*.4));
 }
-const kills=a;
-const attempts=b;
-const errors=c;
-return z_clamp(7.0+((kills-errors)/Math.max(attempts,1))*10+(kills*.15)-(errors*.35));
+const dif=scored-scoredOn;
+const rolePenalty=(role==='Ponteiro'||role==='Oposto') ?{of:.29,def:.22,score:.04} :{of:.20,def:.22,score:.07};
+return z_clamp(6.8+ Math.max(0,dif)*(role==='Ds Spiker'?.20:.27)- Math.max(0,-dif)*(role==='Ds Spiker'?.31:.47)+ Math.min(1.0,scored*(role==='Ds Spiker'?.0525:role==='Líbero'?.0805:rolePenalty.score))- (mistakeOf*rolePenalty.of)- (mistakeDef*rolePenalty.def));
 };
 const z_mvp=z=>{
 const role=z[0];
-const z2=+z[2]||0,z3=+z[3]||0,z4=+z[4]||0,z5=+z[5]||0;
-const z6=z_rating(z);
+const scored=+z[2]||0,scoredOn=+z[3]||0,mistakeOf=+z[4]||0,mistakeDef=+z[5]||0;
+const rating=z_rating(z);
 if(!z_active(z)) return -999;
-if(role==='Setter') return z6-(z4+z5)*.2;
-if(role==='Ds Tsk') return z6-z3*.08-(z4+z5)*.12;
-return z6+(z2-z3)*.25+z2*.05-z4*.08-z5*.1;
+if(role==='Setter') return rating+scored*.08-(mistakeOf+mistakeDef)*.15;
+if(role==='Ds Tsk') return rating+scored*.06-scoredOn*.04-(mistakeOf+mistakeDef)*.10;
+return rating+(scored-scoredOn)*.18+scored*(role==='Ds Spiker'?.0225:role==='Líbero'?.0345:.03)-mistakeOf*.08-mistakeDef*.08;
 };
 const z_eff=z=>z_active(z)?Math.round(z_rating(z)*10):0;
 const z_cons=z=>{if(!z_active(z)) return '–';const z1=z_rating(z);if(z1>=8) return 'Alta';if(z1>=5.5) return 'Média';return 'Baixa';};
@@ -1477,7 +1528,7 @@ if(z1==='csv') this._csv(z2,z3);
 else this._pdf(z2,z3);
 }
 _csv(z1,z2){
-const z3=['Jogador,Role,Pontos,Pontos Tomados,Erro Ofensivo,Erro Defensivo,Rating,Eficiencia,Consistencia'];
+const z3=['Jogador,Role,Pontos Feitos,Pontos Tomados,Erro Ofensivo,Erro Defensivo,Rating,Eficiencia,Consistencia'];
 z1.forEach(z=>{z3.push(`${z[1]},${z[0]},${z[2]},${z[3]},${z[4]},${z[5]},${z_rating(z)},${z_eff(z)}%,${z_cons(z)}`)});
 const z4=z3.join('\n');
 const z5=new Blob(['\ufeff'+z4],{type:'text/csv;charset=utf-8'});
@@ -1767,7 +1818,7 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
     font-size:17px !important;
   }
 }
-</style></head><body><h1>${z2}</h1><div class="sub">Relatório de Estatísticas - Zenoir Stats</div><table><tr><th>Jogador</th><th>Role</th><th>Pontos Feitos</th><th>Pontos Tomados</th><th>Erros Ofensivos</th><th>Erros Defensivos</th><th>Rating</th><th>Eficiência</th><th>Consistência</th></tr>`;
+</style></head><body><h1>${z2}</h1><div class="sub">Relatório de Estatísticas - Zenoir Stats</div><table><tr><th>Jogador</th><th>Role</th><th>Pontos Feitos</th><th>Pontos Tomados</th><th>Erro Ofensivo</th><th>Erro Defensivo</th><th>Rating</th><th>Eficiência</th><th>Consistência</th></tr>`;
 const z5=z1.map(z=>z_rating(z));
 const z6=z5.reduce((a,b)=>a+b,0)/(z1.filter(z=>z_active(z)).length||1);
 z1.forEach(z=>{
@@ -1900,6 +1951,49 @@ return `<div class="z-pcard zr-${z_roleCSS(z[0])}" data-idx="${z1}"><div class="
 }
 _render(){this.z.cards.innerHTML=this._rows.map((z,z1)=>this._buildCard(z,z1)).join('');this._updateAll()}
 _flashNum(z,z1,z2){if(z1===z2) return;z.classList.remove('z-hi','z-lo');void z.offsetWidth;z.classList.add(parseFloat(z1)<parseFloat(z2)?'z-lo':'z-hi')}
+_roleColor(role){
+const key=Z_CSS[role]||z_roleCSS(role);
+return `var(--col-${key})`;
+}
+_weakLabel(type){
+if(type==='taken') return 'Pontos Tomados no';
+if(type==='def') return 'Erro Defensivo do';
+return 'Erro Ofensivo do';
+}
+_roleSpan(role){
+const color=this._roleColor(role);
+return `<span class="z-weak-role" style="--weak-role-color:${color}">${role}</span>`;
+}
+_rolesText(roles){
+return roles.map((role,i)=>`${i?'<span class="z-weak-sep">e</span>':''}${this._roleSpan(role)}`).join('');
+}
+_updateWeakness(rows){
+const el=document.getElementById('z-weakness');
+if(!el) return;
+const items=[];
+rows.forEach(r=>{
+const role=r[0];
+const taken=+r[3]||0;
+const off=+r[4]||0;
+const def=+r[5]||0;
+if(taken>0) items.push({role,type:'taken',value:taken});
+if(off>0) items.push({role,type:'of',value:off});
+if(def>0) items.push({role,type:'def',value:def});
+});
+const strong=el.querySelector('strong');
+if(!strong) return;
+if(!items.length){
+strong.innerHTML='<span class="z-weak-text">Nenhum erro registrado</span>';
+return;
+}
+const max=Math.max(...items.map(i=>i.value));
+const winners=items.filter(i=>i.value===max);
+const order={taken:0,def:1,of:2};
+winners.sort((a,b)=>order[a.type]-order[b.type]);
+const type=winners[0].type;
+const roles=[...new Set(winners.filter(i=>i.type===type).map(i=>i.role))];
+strong.innerHTML=`<span class="z-weak-text">${this._weakLabel(type)}</span>${this._rolesText(roles)}`;
+}
 _updateSummary(z){
 let z1=0,z2=0,z3=0;
 z.forEach((z4,z5)=>{
@@ -1919,6 +2013,7 @@ const consEl=z7.querySelector('[data-cons]');
 consEl.textContent=zc;
 consEl.className=z_consCls(zc);
 });
+this._updateWeakness(z);
 const z4=z3?(z2/z3).toFixed(1):'0.0';
 const z5=this.z.errors,z6=this.z.avg;
 this._flashNum(z5,z1,this.z4.e);
@@ -2010,10 +2105,10 @@ const row=(z16>=0&&set[z16])?set[z16]:z6;
 return `
 <div class="z-setline">
 <b>SET ${idx+1}:</b>
-<span>Scored: ${row[2]}</span>
-<span>On: ${row[3]}</span>
-<span>OF: ${row[4]}</span>
-<span>DEF: ${row[5]}</span>
+<span>P. Feitos: ${row[2]}</span>
+<span>P. Tomados: ${row[3]}</span>
+<span>E. OF: ${row[4]}</span>
+<span>E. DEF: ${row[5]}</span>
 <span>Rating: ${z_rating(row)}</span>
 </div>`;
 }).join('');
