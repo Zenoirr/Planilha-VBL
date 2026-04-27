@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Zenoir Stats</title>
+<title>Player Stats System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -205,8 +205,6 @@ html,body{overflow-y:auto;overflow-x:hidden}
 .z-frow span{font-size:15px}
 .z-frow b{font-size:15px}
 }
-
-
 .z-frow{
 grid-template-columns:2.4fr repeat(5,1fr) 44px;
 text-align:center;
@@ -301,9 +299,6 @@ text-align:center;
 .z-setline{grid-template-columns:1fr;gap:6px;text-align:left}
 .z-setline span{text-align:left}
 }
-
-
-
 .z-info-panel{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -358,24 +353,20 @@ margin-top:18px;
 .z-center{
 overflow:hidden;
 }
-
 .z-final{
 padding:18px 22px !important;
 overflow:hidden !important;
 }
-
 .z-final .z-frow{
 grid-template-columns:2.25fr repeat(5,1fr) 38px !important;
 gap:10px !important;
 padding:14px 10px !important;
 font-size:16px !important;
 }
-
 .z-final .z-frow.z-fhead{
 font-size:14px !important;
 padding:12px 10px 14px !important;
 }
-
 .z-final .z-frow.z-fhead span{
 font-size:14px !important;
 align-items:center !important;
@@ -383,48 +374,38 @@ justify-content:center !important;
 text-align:center !important;
 line-height:1.1 !important;
 }
-
 .z-final .z-frow.z-fhead small{
 font-size:9px !important;
 line-height:1.1 !important;
 margin-top:3px !important;
 }
-
 .z-final .z-frow.z-fhead span:first-child{
 align-items:center !important;
 justify-content:center !important;
 text-align:center !important;
 padding-left:0 !important;
 }
-
 .z-final .z-frow:not(.z-fhead) span{
 font-size:17px !important;
 font-weight:650 !important;
 }
-
 .z-final .z-fplayer{
 font-size:17px !important;
 gap:7px !important;
 }
-
 .z-final .z-frole,
 .z-final .z-fname{
 font-size:17px !important;
 }
-
 .z-final .z-frating{
 font-size:17px !important;
 font-weight:800 !important;
 }
-
 .z-final .z-expand{
 width:28px !important;
 height:28px !important;
 font-size:15px !important;
 }
-
-
-/* TOPO COMPACTO FINAL */
 .z-match-bar{
   grid-template-columns:260px minmax(560px,1fr) auto !important;
   min-height:72px !important;
@@ -545,7 +526,6 @@ font-size:15px !important;
   .z-team-ico{width:25px !important;height:25px !important;}
   .z-match-title-wrap{gap:14px !important;}
 }
-
 .z-top-score[contenteditable="true"]{ cursor:text; min-width:24px; text-align:center; border-radius:6px; padding:0 4px; }
 .z-top-score[contenteditable="true"]:focus{ outline:none; background:rgba(85,132,255,.14); box-shadow:0 0 0 2px rgba(85,132,255,.25); }
 @media(max-width:899px){
@@ -557,9 +537,6 @@ font-size:15px !important;
   .z-team-ico{display:none !important;}
   .z-actions{justify-content:center !important;}
 }
-
-
-/* AJUSTE FINAL - alinhamento tabela final + sets compactos */
 .z-final .z-frow{ grid-template-columns:2.25fr repeat(5,1fr) 38px !important; gap:10px !important; align-items:center !important; text-align:center !important; }
 .z-final .z-frow.z-fhead{ grid-template-columns:2.25fr repeat(5,1fr) 38px !important; padding:12px 10px 14px !important; }
 .z-final .z-frow b{ justify-content:flex-start !important; text-align:left !important; }
@@ -571,12 +548,8 @@ font-size:15px !important;
 .z-setline b{ min-width:62px !important; color:var(--blue) !important; font-family:'Outfit',sans-serif !important; font-size:12px !important; font-weight:800 !important; }
 .z-setline span{ display:inline-flex !important; align-items:center !important; justify-content:center !important; white-space:nowrap !important; padding:4px 9px !important; border:1px solid rgba(85,132,255,.11) !important; border-radius:7px !important; background:rgba(4,6,14,.28) !important; }
 .z-final .z-frow > b.z-fplayer{justify-content:center !important;text-align:center !important;width:100% !important;}
-
 .z-final .z-frow.z-fhead span:first-child{justify-content:center !important;text-align:center !important;
 }
-
-
-/* PAINEL ORGANIZADO DE TIMES / INFORMAÇÕES DO SITE */
 .z-tabs{grid-template-columns:repeat(5,1fr) !important;}
 .z-teams-wrap{
   border:1px solid var(--border2);
@@ -693,13 +666,486 @@ font-size:15px !important;
   .z-teams-grid{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:520px){.z-teams-grid{grid-template-columns:1fr;}}
-
-
 .z-team-card{ cursor:default; }
 .z-team-soon{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:2px; color:#fff; background:rgba(4,7,18,.78); backdrop-filter:blur(5px); opacity:0; transform:scale(.98); transition:opacity .2s var(--ease),transform .2s var(--ease); z-index:3; }
 .z-team-card:hover .z-team-soon{ opacity:1; transform:scale(1); }
 .z-team-card:hover .z-team-name{ opacity:.22; }
-
+body{
+  background:
+    radial-gradient(ellipse 55% 70% at 98% 86%,rgba(85,132,255,.18),transparent 45%),
+    radial-gradient(ellipse 45% 60% at 0% 88%,rgba(85,132,255,.12),transparent 48%),
+    radial-gradient(ellipse 70% 55% at 50% 0%,rgba(85,132,255,.08),transparent 58%),
+    linear-gradient(180deg,#040711,#070b18 58%,#03050c) !important;
+  position:relative;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(115deg,transparent 0 13%,rgba(85,132,255,.08) 13.3%,transparent 14.3%),
+    linear-gradient(115deg,transparent 0 42%,rgba(85,132,255,.06) 42.2%,transparent 43.3%),
+    linear-gradient(115deg,transparent 0 72%,rgba(255,77,184,.055) 72.25%,transparent 73.4%),
+    linear-gradient(rgba(85,132,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(85,132,255,.04) 1px,transparent 1px);
+  background-size:520px 520px,680px 680px,760px 760px,86px 86px,86px 86px;
+  opacity:.72;
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 92%,transparent 100%);
+}
+body::after{
+  content:"";
+  position:fixed;
+  right:-90px;
+  bottom:-125px;
+  width:360px;
+  height:360px;
+  pointer-events:none;
+  opacity:.34;
+  background:
+    radial-gradient(circle at 50% 50%,transparent 0 34%,rgba(85,132,255,.55) 35% 36%,transparent 37% 100%),
+    conic-gradient(from 20deg,transparent 0 10%,rgba(85,132,255,.45) 10% 12%,transparent 12% 28%,rgba(56,189,248,.35) 28% 30%,transparent 30% 49%,rgba(85,132,255,.45) 49% 51%,transparent 51% 70%,rgba(56,189,248,.3) 70% 72%,transparent 72% 100%);
+  filter:drop-shadow(0 0 25px rgba(85,132,255,.3));
+  border-radius:50%;
+}
+.z-app{position:relative;z-index:1}
+.z-app::before{
+  content:"";
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:36px;
+  height:210px;
+  pointer-events:none;
+  background:
+    linear-gradient(155deg,transparent 0 18%,rgba(85,132,255,.18) 18.2%,transparent 19.2%),
+    linear-gradient(155deg,transparent 0 40%,rgba(85,132,255,.12) 40.2%,transparent 41.2%),
+    linear-gradient(155deg,transparent 0 68%,rgba(56,189,248,.1) 68.2%,transparent 69.3%),
+    linear-gradient(90deg,transparent,rgba(85,132,255,.17),transparent);
+  opacity:.55;
+  mask-image:linear-gradient(to top,#000 0%,transparent 88%);
+}
+.z-match-bar,.z-tab,.z-sc,.z-final,.z-teams-wrap{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 0 0 1px rgba(85,132,255,.035),0 10px 35px rgba(0,0,0,.22);
+}
+.z-match-title-wrap{position:relative;padding-bottom:25px;}
+.z-set-scoreline{
+  position:absolute;
+  left:50%;
+  top:42px;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:28px;
+  min-width:270px;
+  height:32px;
+  border-top:1px solid rgba(85,132,255,.22);
+  background:linear-gradient(90deg,transparent,rgba(85,132,255,.08),transparent);
+  color:#9fb7ff;
+  font-family:'DM Mono',monospace;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+.z-set-scoreline span:nth-child(3){color:var(--blue)}
+.z-team-ico-left{color:#3d7cff !important;filter:drop-shadow(0 0 7px rgba(85,132,255,.5)) !important;}
+.z-team-ico-right{color:#ff4db8 !important;filter:drop-shadow(0 0 7px rgba(255,77,184,.4)) !important;}
+.z-scores-bar{grid-template-columns:1fr 1.55fr !important;gap:10px !important;}
+.z-sc{
+  min-height:74px !important;
+  display:grid !important;
+  grid-template-columns:auto 1fr !important;
+  align-items:center !important;
+  justify-content:initial !important;
+  text-align:left !important;
+  padding:14px 24px !important;
+  background:linear-gradient(160deg,rgba(15,21,42,.92),rgba(5,8,18,.86)) !important;
+}
+.z-sc b{font-size:31px !important;color:var(--green)}
+.z-summary-ico{
+  width:38px;
+  height:38px;
+  margin-right:16px;
+  color:var(--red);
+  filter:drop-shadow(0 0 12px rgba(255,61,92,.2));
+}
+.z-summary-ico.z-star{color:var(--green);filter:drop-shadow(0 0 12px rgba(40,212,120,.25));}
+.z-sc-rating{grid-template-columns:auto 1fr auto !important;}
+.z-performance{
+  display:grid;
+  grid-template-columns:auto auto;
+  grid-template-rows:auto auto;
+  align-items:center;
+  gap:5px 16px;
+  min-width:185px;
+  color:var(--green);
+}
+.z-performance small{
+  grid-column:1/-1;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.9px;
+}
+.z-performance strong{font-size:20px;text-transform:uppercase;letter-spacing:1px;}
+.z-performance svg{width:78px;height:30px;opacity:.95;}
+.z-final{
+  background:
+    linear-gradient(170deg,rgba(15,20,36,.95),rgba(7,10,22,.92)),
+    radial-gradient(ellipse 60% 120% at 100% 100%,rgba(85,132,255,.13),transparent 55%) !important;
+}
+.z-frow.z-fhead span{
+  position:relative;
+  gap:4px !important;
+}
+.z-hico{
+  width:28px;
+  height:28px;
+  display:inline-grid;
+  place-items:center;
+  margin-right:8px;
+  border:1px solid rgba(85,132,255,.24);
+  border-radius:7px;
+  color:#9bb8ff;
+  background:rgba(85,132,255,.07);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+}
+.z-hico svg{width:17px;height:17px;display:block;}
+.z-frow.z-fhead span:not(:first-child){flex-direction:row !important;flex-wrap:wrap;}
+.z-frow.z-fhead small{width:100%;padding-left:36px;}
+@media(min-width:1200px){
+  .z-match-title-wrap{padding-bottom:25px !important;}
+  .z-set-scoreline{top:39px;height:30px;font-size:13px;}
+  .z-sc{min-height:66px !important;padding:11px 24px !important;}
+  .z-performance strong{font-size:18px;}
+}
+@media(max-width:899px){
+  .z-set-scoreline{position:static;transform:none;grid-column:1/-1;margin:auto;}
+  .z-scores-bar{grid-template-columns:1fr !important;}
+  .z-sc-rating{grid-template-columns:auto 1fr !important;}
+  .z-performance{grid-column:1/-1;margin-left:54px;}
+}
+.z-match-title-wrap{padding-bottom:0 !important;gap:28px !important;justify-content:center !important;}
+.z-set-scoreline{display:none !important;}
+.z-team-ico{display:none !important;}
+.z-match-title{font-size:38px !important;max-width:230px !important;text-align:center !important;}
+.z-top-team{justify-content:center !important;}
+.z-top-team-left,.z-top-team-right{justify-content:center !important;}
+.z-top-score{font-size:42px !important;min-width:34px !important;}
+.z-match-sep{font-size:31px !important;}
+.z-sc{position:relative;grid-template-columns:auto 1fr !important;min-height:82px !important;}
+.z-sc > div:not(.z-performance):not(.z-weakness){border-left:2px solid rgba(85,132,255,.58);padding-left:18px;display:grid;gap:6px;align-content:center;}
+.z-sc span{display:block !important;font-size:10px !important;line-height:1 !important;letter-spacing:1.3px !important;color:#8ea6e8 !important;}
+.z-sc b{display:block !important;font-size:31px !important;line-height:1 !important;}
+.z-performance.perf-good{color:var(--green)}.z-performance.perf-mid{color:var(--amber)}.z-performance.perf-bad{color:var(--red)}.z-performance.perf-zero{color:var(--muted2)}
+.z-performance .z-graph-good,.z-performance .z-graph-mid,.z-performance .z-graph-bad{display:none;}
+.z-performance.perf-good .z-graph-good{display:block;}.z-performance.perf-mid .z-graph-mid{display:block;}.z-performance.perf-bad .z-graph-bad{display:block;}.z-performance.perf-zero .z-graph-mid{display:block;opacity:.45;}
+@media(min-width:1200px){body{padding:16px 24px !important;overflow:hidden !important;}.z-app{height:calc(100vh - 32px) !important;grid-template-rows:minmax(0,1fr) 24px !important;gap:8px !important;}.z-layout,.z-center{height:100% !important;overflow:hidden !important;}.z-center{grid-template-rows:66px 42px 76px minmax(0,1fr) !important;gap:8px !important;}.z-match-bar{min-height:66px !important;padding:8px 22px !important;}.z-tabs{gap:7px !important;}.z-tab{height:42px !important;}.z-scores-bar{gap:8px !important;}.z-sc{min-height:72px !important;padding:10px 22px !important;}.z-main{min-height:0 !important;height:100% !important;overflow:hidden !important;}.z-grid{height:100% !important;grid-template-columns:repeat(3,1fr) !important;grid-template-rows:repeat(2,minmax(0,1fr)) !important;gap:8px !important;align-content:stretch !important;}.z-pcard{min-height:0 !important;height:100% !important;}.z-inner{padding:10px 14px 8px !important;gap:8px !important;}.z-row{gap:8px !important;}.z-field label{font-size:9px !important;margin-bottom:4px !important;}.z-rolebox,.z-inner input{height:32px !important;font-size:12px !important;padding:0 10px !important;}.z-rolebox{font-size:12px !important;}.z-counter{grid-template-columns:34px 1fr 34px !important;gap:6px !important;}.z-counter button{height:32px !important;font-size:18px !important;}.z-scores{padding:8px 12px !important;}.z-metric{font-size:9px !important;gap:4px !important;}.z-metric b{font-size:14px !important;}.z-info-panel{display:none !important;}.z-footer{font-size:11px !important;min-height:20px !important;}.z-final{height:100% !important;}}
+.z-scores-bar{
+  grid-template-columns:1fr 1.55fr !important;
+  gap:10px !important;
+}
+.z-sc{
+  position:relative !important;
+  min-height:76px !important;
+  overflow:hidden !important;
+}
+.z-sc > div:not(.z-performance):not(.z-weakness){
+  border-left:2px solid rgba(85,132,255,.58) !important;
+  padding-left:18px !important;
+  display:grid !important;
+  grid-template-rows:auto auto !important;
+  gap:6px !important;
+  align-content:center !important;
+}
+.z-sc span{
+  order:1;
+  display:block !important;
+  font-size:10px !important;
+  line-height:1 !important;
+  letter-spacing:1.3px !important;
+  color:#8ea6e8 !important;
+}
+.z-sc b{
+  order:2;
+  display:block !important;
+  font-size:31px !important;
+  line-height:1 !important;
+}
+.z-sc-errors .z-summary-ico{color:var(--red) !important;}
+.z-sc-errors #z-errors{color:var(--amber) !important;text-shadow:0 0 12px rgba(255,186,48,.28) !important;}
+.z-sc-errors #z-errors.err-hot{color:var(--red) !important;text-shadow:0 0 12px rgba(255,61,92,.34) !important;}
+.z-sc-rating{
+  grid-template-columns:auto minmax(130px,1fr) minmax(230px,auto) !important;
+  column-gap:18px !important;
+}
+.z-sc-rating > div:not(.z-performance){
+  min-width:130px !important;
+}
+.z-performance{
+  grid-column:3 !important;
+  justify-self:end !important;
+  width:230px !important;
+  min-width:230px !important;
+  margin-left:0 !important;
+  padding-left:22px !important;
+  border-left:2px solid rgba(85,132,255,.58) !important;
+  display:grid !important;
+  grid-template-columns:minmax(88px,1fr) 86px !important;
+  grid-template-rows:auto auto !important;
+  align-items:center !important;
+  column-gap:14px !important;
+  row-gap:6px !important;
+}
+.z-performance small{
+  grid-column:1 !important;
+  grid-row:1 !important;
+  font-family:'DM Mono',monospace !important;
+  font-size:10px !important;
+  color:#8ea6e8 !important;
+  text-transform:uppercase !important;
+  letter-spacing:1.2px !important;
+  line-height:1 !important;
+}
+.z-performance strong{
+  grid-column:1 !important;
+  grid-row:2 !important;
+  font-size:18px !important;
+  line-height:1 !important;
+  text-transform:uppercase !important;
+  letter-spacing:1px !important;
+}
+.z-performance svg{
+  grid-column:2 !important;
+  grid-row:1 / span 2 !important;
+  width:82px !important;
+  height:32px !important;
+  align-self:center !important;
+}
+.z-performance.perf-good{color:var(--green) !important;}
+.z-performance.perf-mid{color:var(--amber) !important;}
+.z-performance.perf-bad{color:var(--red) !important;}
+.z-performance.perf-zero{color:var(--muted2) !important;}
+.z-performance .z-graph-good,.z-performance .z-graph-mid,.z-performance .z-graph-bad{display:none !important;}
+.z-performance.perf-good .z-graph-good{display:block !important;}
+.z-performance.perf-mid .z-graph-mid{display:block !important;}
+.z-performance.perf-bad .z-graph-bad{display:block !important;}
+.z-performance.perf-zero .z-graph-mid{display:block !important;opacity:.45 !important;}
+.z-perf-graph .dot-good,.z-perf-graph .dot-mid,.z-perf-graph .dot-bad{display:none;}
+.z-performance.perf-good .dot-good{display:block;}
+.z-performance.perf-mid .dot-mid{display:block;}
+.z-performance.perf-bad .dot-bad{display:block;}
+.z-performance.perf-zero .dot-mid{display:block;opacity:.45;}
+@media(min-width:1200px){
+  body{padding:14px 24px !important;overflow:hidden !important;}
+  .z-app{height:calc(100vh - 28px) !important;grid-template-rows:minmax(0,1fr) 18px !important;gap:6px !important;}
+  .z-layout,.z-center{height:100% !important;overflow:hidden !important;}
+  .z-center{grid-template-rows:62px 40px 66px minmax(0,1fr) !important;gap:7px !important;}
+  .z-match-bar{min-height:62px !important;padding:7px 22px !important;}
+  .z-tabs{gap:7px !important;}
+  .z-tab{height:40px !important;}
+  .z-sc{min-height:66px !important;padding:8px 20px !important;}
+  .z-sc b{font-size:28px !important;}
+  .z-summary-ico{width:34px !important;height:34px !important;margin-right:14px !important;}
+  .z-performance{width:225px !important;min-width:225px !important;}
+  .z-performance strong{font-size:17px !important;}
+  .z-main{min-height:0 !important;height:100% !important;overflow:hidden !important;}
+  .z-grid{height:100% !important;grid-template-columns:repeat(3,1fr) !important;grid-template-rows:repeat(2,minmax(0,1fr)) !important;gap:6px !important;align-content:stretch !important;}
+  .z-pcard{min-height:0 !important;height:100% !important;}
+  .z-inner{padding:8px 12px 7px !important;gap:6px !important;}
+  .z-row{gap:7px !important;}
+  .z-field label{font-size:8px !important;margin-bottom:3px !important;}
+  .z-rolebox,.z-inner input{height:28px !important;font-size:11px !important;padding:0 9px !important;}
+  .z-rolebox{font-size:11px !important;}
+  .z-counter{grid-template-columns:32px 1fr 32px !important;gap:5px !important;}
+  .z-counter button{height:28px !important;font-size:17px !important;}
+  .z-scores{padding:6px 10px !important;}
+  .z-metric{font-size:8px !important;gap:3px !important;}
+  .z-metric b{font-size:13px !important;}
+  .z-info-panel{display:none !important;}
+  .z-footer{font-size:10px !important;min-height:16px !important;}
+  .z-final{height:100% !important;}
+}
+@media(max-width:899px){
+  .z-scores-bar{grid-template-columns:1fr !important;}
+  .z-sc-rating{grid-template-columns:auto 1fr !important;}
+  .z-performance{grid-column:1 / -1 !important;justify-self:stretch !important;width:auto !important;min-width:0 !important;margin-left:54px !important;}
+}
+.z-main{
+  min-height:0 !important;
+  height:100% !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+.z-grid{
+  grid-template-columns:repeat(3,1fr) !important;
+  grid-template-rows:auto !important;
+  align-content:start !important;
+  gap:13px !important;
+  height:auto !important;
+}
+.z-pcard{
+  height:auto !important;
+  min-height:0 !important;
+}
+.z-inner{
+  padding:16px 16px 12px !important;
+  gap:11px !important;
+}
+.z-row{
+  gap:11px !important;
+}
+.z-field label{
+  font-size:10px !important;
+  margin-bottom:5px !important;
+}
+.z-rolebox,
+.z-inner input{
+  height:40px !important;
+  font-size:13px !important;
+  padding:0 12px !important;
+}
+.z-rolebox{
+  font-size:14px !important;
+}
+.z-counter{
+  grid-template-columns:38px 1fr 38px !important;
+  gap:6px !important;
+}
+.z-counter button{
+  height:40px !important;
+  font-size:20px !important;
+}
+.z-scores{
+  padding:12px 16px !important;
+}
+.z-metric{
+  font-size:10px !important;
+  gap:5px !important;
+}
+.z-metric b{
+  font-size:17px !important;
+}
+@media(min-width:1200px){
+  .z-center{
+    grid-template-rows:62px 40px 66px minmax(0,1fr) !important;
+    gap:7px !important;
+  }
+  .z-grid{
+    grid-template-columns:repeat(3,1fr) !important;
+    grid-template-rows:auto !important;
+    align-content:start !important;
+    gap:13px !important;
+    height:auto !important;
+  }
+  .z-pcard{
+    height:auto !important;
+    min-height:0 !important;
+  }
+  .z-inner{
+    padding:16px 16px 12px !important;
+    gap:11px !important;
+  }
+  .z-row{
+    gap:11px !important;
+  }
+  .z-field label{
+    font-size:10px !important;
+    margin-bottom:5px !important;
+  }
+  .z-rolebox,
+  .z-inner input{
+    height:40px !important;
+    font-size:13px !important;
+    padding:0 12px !important;
+  }
+  .z-rolebox{
+    font-size:14px !important;
+  }
+  .z-counter{
+    grid-template-columns:38px 1fr 38px !important;
+    gap:6px !important;
+  }
+  .z-counter button{
+    height:40px !important;
+    font-size:20px !important;
+  }
+  .z-scores{
+    padding:12px 16px !important;
+  }
+  .z-metric{
+    font-size:10px !important;
+    gap:5px !important;
+  }
+  .z-metric b{
+    font-size:17px !important;
+  }
+}
+.z-info-panel{
+  order:7 !important;
+  display:grid !important;
+  grid-template-columns:repeat(3,1fr) !important;
+  gap:10px !important;
+  margin:8px 0 0 !important;
+}
+.z-info-card{
+  min-height:58px !important;
+  padding:10px 14px !important;
+  background:linear-gradient(160deg,rgba(15,20,36,.82),rgba(7,10,21,.86)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 8px 22px rgba(0,0,0,.18) !important;
+}
+.z-info-card strong{font-size:11px !important;letter-spacing:.8px !important;}
+.z-info-card small{font-size:10px !important;line-height:1.35 !important;}
+.z-main{order:6 !important;}
+@media(min-width:1200px){
+  .z-center{
+    grid-template-rows:62px 40px 66px auto auto !important;
+    align-content:start !important;
+    gap:7px !important;
+  }
+  .z-main{
+    height:auto !important;
+    min-height:0 !important;
+    overflow:visible !important;
+  }
+  .z-grid{
+    grid-template-columns:repeat(3,1fr) !important;
+    grid-template-rows:auto !important;
+    align-content:start !important;
+    gap:13px !important;
+    height:auto !important;
+  }
+  .z-info-panel{
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr) !important;
+  }
+  .z-info-card{
+    min-height:58px !important;
+  }
+}
+@media(min-width:1700px){
+  .z-center{gap:9px !important;}
+  .z-grid{gap:14px !important;}
+  .z-info-card{min-height:66px !important;padding:12px 16px !important;}
+  .z-info-card strong{font-size:12px !important;}
+  .z-info-card small{font-size:11px !important;}
+}
+@media(max-width:899px){
+  .z-info-panel{grid-template-columns:1fr !important;}
+}
+.z-sc-errors{grid-template-columns:auto minmax(120px,auto) minmax(360px,1fr) !important;column-gap:18px !important;}
+.z-weakness{justify-self:end;display:grid !important;grid-template-columns:34px minmax(280px,auto) !important;align-items:center !important;gap:12px !important;min-width:360px;max-width:430px;padding-left:0;border-left:0 !important;}
+.z-weakness svg{width:32px;height:32px;color:var(--red);filter:drop-shadow(0 0 10px rgba(255,61,92,.22));align-self:center;}
+.z-weakness > div{border-left:2px solid rgba(85,132,255,.58) !important;padding-left:18px !important;display:grid !important;gap:6px !important;align-content:center !important;min-height:42px !important;}
+.z-weakness small{display:block !important;font-family:'DM Mono',monospace !important;font-size:10px !important;color:#8ea6e8 !important;text-transform:uppercase !important;letter-spacing:1.2px !important;line-height:1 !important;margin:0 !important;}
+.z-weakness strong{display:flex !important;align-items:center !important;flex-wrap:nowrap !important;gap:4px !important;font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;letter-spacing:.4px;line-height:1.05;color:var(--text) !important;white-space:nowrap;}
+.z-sc .z-weak-text{display:inline !important;color:var(--text) !important;white-space:nowrap !important;}
+.z-sc .z-weak-role{display:inline !important;font-weight:900 !important;color:var(--weak-role-color) !important;white-space:nowrap !important;text-transform:uppercase;}
+.z-sc .z-weak-sep{display:inline !important;color:var(--text) !important;font-weight:800 !important;white-space:nowrap !important;text-transform:none !important;}
+@media(min-width:1200px){.z-sc-errors{grid-template-columns:auto minmax(110px,auto) minmax(350px,1fr) !important;}.z-weakness{min-width:350px;max-width:420px;}.z-weakness strong{font-size:15px;}}
+@media(max-width:899px){.z-sc-errors{grid-template-columns:auto 1fr !important;}.z-weakness{grid-column:1 / -1;justify-self:stretch;margin-left:54px;min-width:0;max-width:none;}.z-weakness strong{flex-wrap:wrap !important;white-space:normal;}}
 </style>
 </head>
 <body>
@@ -712,11 +1158,11 @@ font-size:15px !important;
 <div class="z-match-format">MD3</div>
 </div>
 <div class="z-match-title-wrap">
-<div class="z-top-team z-top-team-left"><svg class="z-team-ico z-team-ico-left" viewBox="0 0 24 24" fill="none"><path d="M6 20V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 5.2h9.4c.8 0 1.3.9.8 1.5l-1.5 2 1.5 2c.5.7 0 1.6-.8 1.6H7" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9.2 8.6h4.7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" opacity=".7"/></svg><input id="z-t1" class="z-match-title" value="TIME 1"/></div>
+<div class="z-top-team z-top-team-left"><input id="z-t1" class="z-match-title" value="TIME 1"/></div>
 <b id="z-s1" class="z-top-score" contenteditable="true" inputmode="numeric">0</b>
 <span class="z-match-sep">X</span>
 <b id="z-s2" class="z-top-score" contenteditable="true" inputmode="numeric">0</b>
-<div class="z-top-team z-top-team-right"><input id="z-t2" class="z-match-title" value="TIME 2"/><svg class="z-team-ico z-team-ico-right" viewBox="0 0 24 24" fill="none"><path d="M18 20V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M17 5.2H7.6c-.8 0-1.3.9-.8 1.5l1.5 2-1.5 2c-.5.7 0 1.6.8 1.6H17" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14.8 8.6h-4.7" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" opacity=".7"/></svg></div>
+<div class="z-top-team z-top-team-right"><input id="z-t2" class="z-match-title" value="TIME 2"/></div>
 </div>
 <div class="z-actions">
 <div class="z-export-menu">
@@ -739,8 +1185,8 @@ RESET SET
 <button class="z-tab" data-view="teams">TIMES</button>
 </section>
 <section class="z-scores-bar">
-<div class="z-sc"><span>Erros Totais</span><b id="z-errors">0</b></div>
-<div class="z-sc"><span>Rating Médio</span><b id="z-avg">0.0</b></div>
+<div class="z-sc z-sc-errors"><svg class="z-summary-ico" viewBox="0 0 24 24" fill="none"><path d="M12 3l9 16H3L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 8v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 16.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><div><span>Erros Totais</span><b id="z-errors">0</b></div><div class="z-weakness" id="z-weakness"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l8 4v6c0 4.2-3 7.2-8 8-5-.8-8-3.8-8-8V7l8-4z" stroke="currentColor" stroke-width="1.7"/><path d="M12 8v5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 16.5h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><div><small>Ponto Fraco</small><strong>Nenhum erro registrado</strong></div></div></div>
+<div class="z-sc z-sc-rating"><svg class="z-summary-ico z-star" viewBox="0 0 24 24" fill="none"><path d="M12 3.2l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9L6.6 20l1-6.1-4.4-4.3 6.1-.9L12 3.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><div><span>Rating Médio</span><b id="z-avg">0.0</b></div><div class="z-performance"><small>Desempenho</small><strong id="z-perf-label">—</strong><svg class="z-perf-graph" viewBox="0 0 80 32" fill="none"><path class="z-graph-good" d="M4 24c11 0 12-8 22-8s12-7 23-7 14-8 27-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="z-graph-mid" d="M4 18c12-4 17 7 27 2s15-1 22-5 12-2 23-7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="z-graph-bad" d="M4 8c10 4 15-1 24 7s14 2 23 7 14 6 25 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><g class="dot-good"><circle cx="4" cy="24" r="2" fill="currentColor"/><circle cx="26" cy="16" r="2" fill="currentColor"/><circle cx="49" cy="9" r="2" fill="currentColor"/><circle cx="76" cy="1" r="2" fill="currentColor"/></g><g class="dot-mid"><circle cx="4" cy="18" r="2" fill="currentColor"/><circle cx="31" cy="20" r="2" fill="currentColor"/><circle cx="53" cy="15" r="2" fill="currentColor"/><circle cx="76" cy="8" r="2" fill="currentColor"/></g><g class="dot-bad"><circle cx="4" cy="8" r="2" fill="currentColor"/><circle cx="28" cy="15" r="2" fill="currentColor"/><circle cx="51" cy="22" r="2" fill="currentColor"/><circle cx="76" cy="28" r="2" fill="currentColor"/></g></svg></div></div>
 </section>
 <div class="z-legend" id="z-final-legend">
 <div class="z-legend-item"><div class="z-legend-dot" style="background:var(--green)"></div>Excelente (9.0+)</div>
@@ -751,15 +1197,15 @@ RESET SET
 <section class="z-info-panel" aria-label="Descrições rápidas dos erros">
   <article class="z-info-card z-info-def">
     <strong>Mistake DEF (geral)</strong>
-    <small>Ponto cedido por erro defensivo direto: falta de reação, posicionamento incorreto ou leitura falha da jogada.</small>
+    <small>Erro Defensivo: ponto sofrido por falha de recepção, posicionamento, cobertura ou leitura defensiva.</small>
   </article>
   <article class="z-info-card z-info-of">
     <strong>Mistake OF (spikers)</strong>
-    <small>Erro ofensivo direto: ataque no bloqueio sem necessidade, bola fora ou finalização mal executada.</small>
+    <small>Erro Ofensivo: ataque errado, bola fora, finalização mal executada ou jogada ofensiva desperdiçada.</small>
   </article>
   <article class="z-info-card z-info-set">
     <strong>Mistake OF (DS/Setter)</strong>
-    <small>Erro técnico na construção da jogada: levantamento impreciso, set quebrado ou decisão errada.</small>
+    <small>Setter/DS TSK: rating valoriza pontos feitos e reduz punição de pontos tomados/erros para refletir função de suporte.</small>
   </article>
 </section>
 <main class="z-main">
@@ -777,11 +1223,10 @@ RESET SET
 </section>
 </div>
 <div class="z-view z-hidden" id="z-final-layer"><section class="z-final"><div class="z-ftable" id="z-final-table"></div></section></div>
-
 </main>
 </div>
 </div>
-<div class="z-footer"><em style="color:var(--muted2)">Made By</em><em>ZENOIR</em><em style="color:var(--muted2)">&copy; 2026</em></div>
+<div class="z-footer"><em style="color:var(--muted2)">Made By</em><em>ZENOIR and Fuas</em><em style="color:var(--muted2)">&copy; 2026</em></div>
 </div>
 <script>
 const Z_KEY='zn_v5';
@@ -840,20 +1285,30 @@ const z_active=z=>!!(+z[2]||+z[3]||+z[4]||+z[5]);
 const z_roleCSS=z=>Z_CSS[z]||z.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,'');
 const z_clone=()=>JSON.parse(JSON.stringify(Z_ROLES));
 const z_rating=z=>{
-const[z1,,z2,z3,z4,z5]=z.map(Number);
+const role=z[0];
+const scored=+z[2]||0;
+const scoredOn=+z[3]||0;
+const mistakeOf=+z[4]||0;
+const mistakeDef=+z[5]||0;
 if(!z_active(z)) return 0;
-if(z1==='Setter') return z_clamp(9.2-z4*.28-z5*.22+z2*.35);
-if(z1==='Ds Tsk') return z_clamp(9.0-z3*.18-z4*.28-z5*.20+z2*.35);
-const z6=z2-z3;
-return z_clamp(6.5+Math.max(0,z6)*.42-Math.max(0,-z6)*.32+Math.min(1.2,z2*.08)-z4*.18-z5*.22);
+if(role==='Setter'){
+  return z_clamp(9.0-(mistakeOf*.23)-(mistakeDef*.22)+(scored*.4));
+}
+if(role==='Ds Tsk'){
+  return z_clamp(9.0-(scoredOn*.46)-(mistakeOf*.22)-(mistakeDef*.22)+(scored*.4));
+}
+const dif=scored-scoredOn;
+const rolePenalty=(role==='Ponteiro'||role==='Oposto') ?{of:.29,def:.22,score:.04} :{of:.20,def:.22,score:.07};
+return z_clamp(6.8+ Math.max(0,dif)*(role==='Ds Spiker'?.20:.27)- Math.max(0,-dif)*(role==='Ds Spiker'?.31:.47)+ Math.min(1.0,scored*(role==='Ds Spiker'?.0525:role==='Líbero'?.0805:rolePenalty.score))- (mistakeOf*rolePenalty.of)- (mistakeDef*rolePenalty.def));
 };
 const z_mvp=z=>{
-const[z1,,z2,z3,z4,z5]=z.map(Number);
-const z6=z_rating(z);
+const role=z[0];
+const scored=+z[2]||0,scoredOn=+z[3]||0,mistakeOf=+z[4]||0,mistakeDef=+z[5]||0;
+const rating=z_rating(z);
 if(!z_active(z)) return -999;
-if(z1==='Setter') return z6-(z4+z5)*.2;
-if(z1==='Ds Tsk') return z6-z3*.08-(z4+z5)*.12;
-return z6+(z2-z3)*.25+z2*.05-z4*.08-z5*.1;
+if(role==='Setter') return rating+scored*.08-(mistakeOf+mistakeDef)*.15;
+if(role==='Ds Tsk') return rating+scored*.06-scoredOn*.04-(mistakeOf+mistakeDef)*.10;
+return rating+(scored-scoredOn)*.18+scored*(role==='Ds Spiker'?.0225:role==='Líbero'?.0345:.03)-mistakeOf*.08-mistakeDef*.08;
 };
 const z_eff=z=>z_active(z)?Math.round(z_rating(z)*10):0;
 const z_cons=z=>{if(!z_active(z)) return '–';const z1=z_rating(z);if(z1>=8) return 'Alta';if(z1>=5.5) return 'Média';return 'Baixa';};
@@ -877,6 +1332,13 @@ const z_rtCls=z=>{if(z>=8) return 'z-rt-g';if(z<4) return 'z-rt-r';return 'z-rt-
 const z_valCls=z=>{if(!z||z<=0)return 'z-val-zero';if(z>=8)return 'z-val-excel';if(z>=7)return 'z-val-good';if(z>=5)return 'z-val-mid';if(z>=4)return 'z-val-low';return 'z-val-bad'};
 const z_effCls=z=>{if(!z||z<=0)return 'z-val-zero';if(z>=80)return 'z-val-excel';if(z>=70)return 'z-val-good';if(z>=50)return 'z-val-mid';if(z>=40)return 'z-val-low';return 'z-val-bad'};
 const z_consCls=z=>z==='Alta'?'z-val-excel':z==='Média'?'z-val-good':z==='Baixa'?'z-val-bad':'z-val-zero';
+const Z_HICONS={
+score:`<span class="z-hico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.3" opacity=".75"/></svg></span>`,
+taken:`<span class="z-hico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3z" stroke="currentColor" stroke-width="1.8"/><path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`,
+off:`<span class="z-hico"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19L19 5M8 5l11 11M5 8l11 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M15 5h4v4M5 15v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/></svg></span>`,
+def:`<span class="z-hico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3z" stroke="currentColor" stroke-width="1.8"/><path d="M8.5 12.3h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>`,
+rate:`<span class="z-hico"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3.2l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9L6.6 20l1-6.1-4.4-4.3 6.1-.9L12 3.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>`
+};
 class ZenoirApp{
 constructor(){
 this.z={legend:document.getElementById('z-final-legend'),
@@ -992,7 +1454,6 @@ el.style.width=w+'px';
 el.style.minWidth=w+'px';
 el.style.maxWidth=w+'px';
 }
-
 _paintTeamName(el,name){
 if(!el) return;
 const nm=name||'TIME';
@@ -1067,7 +1528,7 @@ if(z1==='csv') this._csv(z2,z3);
 else this._pdf(z2,z3);
 }
 _csv(z1,z2){
-const z3=['Jogador,Role,Pontos,Pontos Tomados,Erro Ofensivo,Erro Defensivo,Rating,Eficiencia,Consistencia'];
+const z3=['Jogador,Role,Pontos Feitos,Pontos Tomados,Erro Ofensivo,Erro Defensivo,Rating,Eficiencia,Consistencia'];
 z1.forEach(z=>{z3.push(`${z[1]},${z[0]},${z[2]},${z[3]},${z[4]},${z[5]},${z_rating(z)},${z_eff(z)}%,${z_cons(z)}`)});
 const z4=z3.join('\n');
 const z5=new Blob(['\ufeff'+z4],{type:'text/csv;charset=utf-8'});
@@ -1095,7 +1556,6 @@ td:first-child{text-align:left;font-weight:700}
 .worst td:first-child{color:#ff3d5c}
 .rt-g{color:#28d478}.rt-y{color:#ffba30}.rt-o{color:#ff7033}.rt-r{color:#ff3d5c}
 .footer{text-align:center;font-size:11px;color:#3d5280;margin-top:32px;padding-top:16px;border-top:1px solid rgba(80,110,200,.1)}
-
 .z-frow{grid-template-columns:2.4fr repeat(5,1fr) 44px;text-align:center;}
 .z-frow.z-fhead span{
 display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;}
@@ -1132,10 +1592,6 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
 @media(max-width:899px){
   .z-info-panel{grid-template-columns:1fr}
 }
-
-
-
-/* PAINEL ORGANIZADO DE TIMES / INFORMAÇÕES DO SITE */
 .z-tabs{grid-template-columns:repeat(5,1fr) !important;}
 .z-teams-wrap{
   border:1px solid var(--border2);
@@ -1252,8 +1708,117 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;gap
   .z-teams-grid{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:520px){.z-teams-grid{grid-template-columns:1fr;}}
-
-</style></head><body><h1>${z2}</h1><div class="sub">Relatório de Estatísticas - Zenoir Stats</div><table><tr><th>Jogador</th><th>Role</th><th>Pontos Feitos</th><th>Pontos Tomados</th><th>Erros Ofensivos</th><th>Erros Defensivos</th><th>Rating</th><th>Eficiência</th><th>Consistência</th></tr>`;
+.z-main{
+  min-height:0 !important;
+  height:100% !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+.z-grid{
+  grid-template-columns:repeat(3,1fr) !important;
+  grid-template-rows:auto !important;
+  align-content:start !important;
+  gap:13px !important;
+  height:auto !important;
+}
+.z-pcard{
+  height:auto !important;
+  min-height:0 !important;
+}
+.z-inner{
+  padding:16px 16px 12px !important;
+  gap:11px !important;
+}
+.z-row{
+  gap:11px !important;
+}
+.z-field label{
+  font-size:10px !important;
+  margin-bottom:5px !important;
+}
+.z-rolebox,
+.z-inner input{
+  height:40px !important;
+  font-size:13px !important;
+  padding:0 12px !important;
+}
+.z-rolebox{
+  font-size:14px !important;
+}
+.z-counter{
+  grid-template-columns:38px 1fr 38px !important;
+  gap:6px !important;
+}
+.z-counter button{
+  height:40px !important;
+  font-size:20px !important;
+}
+.z-scores{
+  padding:12px 16px !important;
+}
+.z-metric{
+  font-size:10px !important;
+  gap:5px !important;
+}
+.z-metric b{
+  font-size:17px !important;
+}
+@media(min-width:1200px){
+  .z-center{
+    grid-template-rows:62px 40px 66px minmax(0,1fr) !important;
+    gap:7px !important;
+  }
+  .z-grid{
+    grid-template-columns:repeat(3,1fr) !important;
+    grid-template-rows:auto !important;
+    align-content:start !important;
+    gap:13px !important;
+    height:auto !important;
+  }
+  .z-pcard{
+    height:auto !important;
+    min-height:0 !important;
+  }
+  .z-inner{
+    padding:16px 16px 12px !important;
+    gap:11px !important;
+  }
+  .z-row{
+    gap:11px !important;
+  }
+  .z-field label{
+    font-size:10px !important;
+    margin-bottom:5px !important;
+  }
+  .z-rolebox,
+  .z-inner input{
+    height:40px !important;
+    font-size:13px !important;
+    padding:0 12px !important;
+  }
+  .z-rolebox{
+    font-size:14px !important;
+  }
+  .z-counter{
+    grid-template-columns:38px 1fr 38px !important;
+    gap:6px !important;
+  }
+  .z-counter button{
+    height:40px !important;
+    font-size:20px !important;
+  }
+  .z-scores{
+    padding:12px 16px !important;
+  }
+  .z-metric{
+    font-size:10px !important;
+    gap:5px !important;
+  }
+  .z-metric b{
+    font-size:17px !important;
+  }
+}
+</style></head><body><h1>${z2}</h1><div class="sub">Relatório de Estatísticas - Zenoir Stats</div><table><tr><th>Jogador</th><th>Role</th><th>Pontos Feitos</th><th>Pontos Tomados</th><th>Erro Ofensivo</th><th>Erro Defensivo</th><th>Rating</th><th>Eficiência</th><th>Consistência</th></tr>`;
 const z5=z1.map(z=>z_rating(z));
 const z6=z5.reduce((a,b)=>a+b,0)/(z1.filter(z=>z_active(z)).length||1);
 z1.forEach(z=>{
@@ -1263,7 +1828,7 @@ const z9=z8[0]&&z[1]===z8[0][1]?'mvp':z8[z8.length-1]&&z[1]===z8[z8.length-1][1]
 const z10=z7>=8?'rt-g':z7>=7?'rt-y':z7>=5?'rt-o':'rt-r';
 z4+=`<tr class="${z9}"><td>${z[1]}</td><td>${z[0]}</td><td>${z[2]}</td><td>${z[3]}</td><td>${z[4]}</td><td>${z[5]}</td><td class="${z10}">${z7}</td><td>${z_eff(z)}%</td><td>${z_cons(z)}</td></tr>`;
 });
-z4+=`</table><div class="footer">Rating Médio: ${z6.toFixed(1)} &bull; Made By Zenoir &copy; 2026</div></body></html>`;
+z4+=`</table><div class="footer">Rating Médio: ${z6.toFixed(1)} &bull; Made By Zenoir and Fuas &copy; 2026</div></body></html>`;
 z3.document.write(z4);
 z3.document.close();
 setTimeout(()=>z3.print(),400);
@@ -1322,9 +1887,7 @@ if(set[z1]) set[z1][1]=val;
 const rows=this._rows;
 rows[z1][z2]=val;
 }
-
 if(z.type==='number' && val>0) this._setLive();
-
 this._save();
 this._updateAll();
 }
@@ -1388,6 +1951,49 @@ return `<div class="z-pcard zr-${z_roleCSS(z[0])}" data-idx="${z1}"><div class="
 }
 _render(){this.z.cards.innerHTML=this._rows.map((z,z1)=>this._buildCard(z,z1)).join('');this._updateAll()}
 _flashNum(z,z1,z2){if(z1===z2) return;z.classList.remove('z-hi','z-lo');void z.offsetWidth;z.classList.add(parseFloat(z1)<parseFloat(z2)?'z-lo':'z-hi')}
+_roleColor(role){
+const key=Z_CSS[role]||z_roleCSS(role);
+return `var(--col-${key})`;
+}
+_weakLabel(type){
+if(type==='taken') return 'Pontos Tomados no';
+if(type==='def') return 'Erro Defensivo do';
+return 'Erro Ofensivo do';
+}
+_roleSpan(role){
+const color=this._roleColor(role);
+return `<span class="z-weak-role" style="--weak-role-color:${color}">${role}</span>`;
+}
+_rolesText(roles){
+return roles.map((role,i)=>`${i?'<span class="z-weak-sep">e</span>':''}${this._roleSpan(role)}`).join('');
+}
+_updateWeakness(rows){
+const el=document.getElementById('z-weakness');
+if(!el) return;
+const items=[];
+rows.forEach(r=>{
+const role=r[0];
+const taken=+r[3]||0;
+const off=+r[4]||0;
+const def=+r[5]||0;
+if(taken>0) items.push({role,type:'taken',value:taken});
+if(off>0) items.push({role,type:'of',value:off});
+if(def>0) items.push({role,type:'def',value:def});
+});
+const strong=el.querySelector('strong');
+if(!strong) return;
+if(!items.length){
+strong.innerHTML='<span class="z-weak-text">Nenhum erro registrado</span>';
+return;
+}
+const max=Math.max(...items.map(i=>i.value));
+const winners=items.filter(i=>i.value===max);
+const order={taken:0,def:1,of:2};
+winners.sort((a,b)=>order[a.type]-order[b.type]);
+const type=winners[0].type;
+const roles=[...new Set(winners.filter(i=>i.type===type).map(i=>i.role))];
+strong.innerHTML=`<span class="z-weak-text">${this._weakLabel(type)}</span>${this._rolesText(roles)}`;
+}
 _updateSummary(z){
 let z1=0,z2=0,z3=0;
 z.forEach((z4,z5)=>{
@@ -1407,12 +2013,16 @@ const consEl=z7.querySelector('[data-cons]');
 consEl.textContent=zc;
 consEl.className=z_consCls(zc);
 });
+this._updateWeakness(z);
 const z4=z3?(z2/z3).toFixed(1):'0.0';
 const z5=this.z.errors,z6=this.z.avg;
 this._flashNum(z5,z1,this.z4.e);
 this._flashNum(z6,z4,this.z4.a);
 z5.textContent=z1;
 z6.textContent=z4;
+z5.classList.toggle('err-hot', z1 > 10);
+const perf=document.getElementById('z-perf-label');
+if(perf){const n=parseFloat(z4)||0;const box=perf.closest('.z-performance');perf.textContent=n>=8.5?'EXCELENTE':n>=7?'BOM':n>=5?'MÉDIO':n>0?'BAIXO':'—';if(box){box.classList.remove('perf-good','perf-mid','perf-bad','perf-zero');box.classList.add(n>=8.5?'perf-good':n>=5?'perf-mid':n>0?'perf-bad':'perf-zero');}}
 this.z4={e:z1,a:z4};
 }
 _setManualScore(idx,val,finalize=false){
@@ -1466,23 +2076,19 @@ const z=this._combined();
 const z1a=z.filter(z=>z_active(z)).sort((a,b)=>z_mvp(b)-z_mvp(a));
 const z1b=z.filter(z=>!z_active(z));
 const z1=[...z1a,...z1b];
-
 this._updateSummary(z1);
-
 const z2=z1a.length?z1a[0]:null;
 const z3=z1a.length>1?z1a[z1a.length-1]:null;
-
 const z4=`
 <div class="z-frow z-fhead">
 <span>JOGADOR</span>
-<span>P. Feitos<small>Ataques convertidos</small></span>
-<span>P. Tomados<small>Pontos Sofridos</small></span>
-<span>E. Ofensivo<small>Erro De Ataque</small></span>
-<span>E. Defensivo<small>Falha Defensiva</small></span>
-<span>RATING<small>Média</small></span>
+<span>${Z_HICONS.score}P. Feitos<small>Ataques convertidos</small></span>
+<span>${Z_HICONS.taken}P. Tomados<small>Pontos Sofridos</small></span>
+<span>${Z_HICONS.off}E. Ofensivo<small>Erro De Ataque</small></span>
+<span>${Z_HICONS.def}E. Defensivo<small>Falha Defensiva</small></span>
+<span>${Z_HICONS.rate}RATING<small>Média</small></span>
 <span></span>
 </div>`;
-
 const z5=z1.map(z6=>{
 const z7=z_rating(z6);
 const z8=z2&&z6[1]===z2[1];
@@ -1494,20 +2100,18 @@ const z13=Z_CSS[z6[0]]||z_roleCSS(z6[0]);
 const z14=z6[1];
 const z15=this.zOpenFinal===z14?'open':'';
 const z16=Z_ROLES.findIndex(r=>r[0]===z6[0]);
-
 const zSets=this.z1.sets.map((set,idx)=>{
 const row=(z16>=0&&set[z16])?set[z16]:z6;
 return `
 <div class="z-setline">
 <b>SET ${idx+1}:</b>
-<span>Scored: ${row[2]}</span>
-<span>On: ${row[3]}</span>
-<span>OF: ${row[4]}</span>
-<span>DEF: ${row[5]}</span>
+<span>P. Feitos: ${row[2]}</span>
+<span>P. Tomados: ${row[3]}</span>
+<span>E. OF: ${row[4]}</span>
+<span>E. DEF: ${row[5]}</span>
 <span>Rating: ${z_rating(row)}</span>
 </div>`;
 }).join('');
-
 return `
 <div class="z-frow ${z10}">
 <b class="z-fplayer">
@@ -1526,7 +2130,6 @@ return `
 ${zSets}
 </div>`;
 }).join('');
-
 this.z.finalT.innerHTML=z4+z5;
 this.z.finalT.parentElement.appendChild(this.z.legend);
 this.z.finalT.querySelectorAll('.z-expand').forEach(btn=>{
