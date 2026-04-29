@@ -251,7 +251,7 @@ const assist=+z[6]||0;
 const block=+z[7]||0;
 if(!z_active(z)) return 0;
 if(role==='Setter'){
-  return z_clamp(7.4+(assist*.20)+(block*.02)+(scored*.08)-(mistakeOf*.10)-(mistakeDef*.035));
+  return z_clamp(7.4+(assist*.20)+(block*.02)+(scored*.08)-(mistakeOf*.17)-(mistakeDef*.11));
 }
 if(role==='Ds Tsk'){
   return z_clamp(7.5+(assist*.11)+(scored*.12)-(scoredOn*.07)-(mistakeOf*.08)-(mistakeDef*.05));
